@@ -1,0 +1,1558 @@
+{
+	"info": {
+		"_postman_id": "01f90d7d-eeff-4788-9377-571260ee5d0e",
+		"name": "WIYT NodeJs API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11142919"
+	},
+	"item": [
+		{
+			"name": "Sports",
+			"item": [
+				{
+					"name": "Sports List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/sports",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"sports"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Signup",
+			"item": [
+				{
+					"name": "Signup API",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstname",
+									"value": "Meheresh",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "Mulmule",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "arjun1771@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "pass123",
+									"type": "text"
+								},
+								{
+									"key": "country_id",
+									"value": "101",
+									"type": "text"
+								},
+								{
+									"key": "state_id",
+									"value": "22",
+									"type": "text"
+								},
+								{
+									"key": "city_id",
+									"value": "1679",
+									"type": "text"
+								},
+								{
+									"key": "sport_id[]",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "sport_id[]",
+									"value": "13",
+									"type": "text"
+								},
+								{
+									"key": "dob",
+									"value": "1995-12-20",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup OTP Verification API",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/signup/otp_verification?email=mulmulerus1717@gmail.com&otp=65661",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"signup",
+								"otp_verification"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "mulmulerus1717@gmail.com"
+								},
+								{
+									"key": "otp",
+									"value": "65661"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup Resend OTP API",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/signup/otp_resend?email=mulmulerus1717@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"signup",
+								"otp_resend"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "mulmulerus1717@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup Resend OTP Email Verify API",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/signup/otp_resend_email_verify?email=mulmulerus1717@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"signup",
+								"otp_resend_email_verify"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "mulmulerus1717@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login API",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "mulmulerus1717@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "pass123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/login/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forget Password API",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "mulmulerus1717@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/login/forget_password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login",
+								"forget_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "mulmulerus1717@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "otp",
+									"value": "01515",
+									"type": "text"
+								},
+								{
+									"key": "new_password",
+									"value": "pass123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/login/change_password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login",
+								"change_password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "Location API",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:3000/location/?name=cities&id=22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"location",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "cities"
+								},
+								{
+									"key": "id",
+									"value": "22"
+								}
+							]
+						},
+						"description": "Steps to get location\r\n1. Add 3 names in name parameters (countries,states,cities).\r\n2. To get states add country id with name parameter (?name=states&id=101).\r\n3.To get cities add state id in with name parameter (?name=cities&id=22)."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "View Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDM4NDAxNjUsImV4cCI6MTcwMzg0Mzc2NX0.Zn_12FsK2QPoMwGMwQlGOU-rkb_H2eXQkbhesgdIx7M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "token_id",
+									"value": "ku0956d6dfkk673d3d7390g37d7f99g4gip6087ydtxgmmgiik",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/profile/view_profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"profile",
+								"view_profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2OTk3MjQ4NjEsImV4cCI6MTY5OTcyODQ2MX0.B3XKDVOawMhzikGR6VTVETibGFVVPPFbwWlRDgxeqmQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Rushi/Downloads/mt sinai.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2OTk3MjQ4NjEsImV4cCI6MTY5OTcyODQ2MX0.B3XKDVOawMhzikGR6VTVETibGFVVPPFbwWlRDgxeqmQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstname",
+									"value": "meheresh",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "Mulmule",
+									"type": "text"
+								},
+								{
+									"key": "country_id",
+									"value": "101",
+									"type": "text"
+								},
+								{
+									"key": "state_id",
+									"value": "22",
+									"type": "text"
+								},
+								{
+									"key": "city_id",
+									"value": "1679",
+									"type": "text"
+								},
+								{
+									"key": "sport_id[]",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "sport_id[]",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "dob",
+									"value": "1995-12-20",
+									"type": "text"
+								},
+								{
+									"key": "tshirt_number",
+									"value": "17",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "m",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/profile/edit_profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"profile",
+								"edit_profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Profile Email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjo5LCJwYXNzd29yZCI6IjMyMjUwMTcwYTBkY2E5MmQ1M2VjOTYyNGYzMzZjYTI0In0sImlhdCI6MTY4MDk3NTY4NywiZXhwIjoxNjgwOTc5Mjg3fQ.l5LmpuM-Bje0Xy7Bga4H4xBrzM0UAWvpiy2pRwuoIug",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "mulmulerus1718@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/profile/edit_profile_email",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"profile",
+								"edit_profile_email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Edit Profile Email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MThAZ21haWwuY29tIiwicGxheWVyX2lkIjo5LCJwYXNzd29yZCI6IjMyMjUwMTcwYTBkY2E5MmQ1M2VjOTYyNGYzMzZjYTI0In0sImlhdCI6MTY4MTAzODg0MSwiZXhwIjoxNjgxMDQyNDQxfQ.BC6-eEFvicRb8-swwVCQexcI4cjx8lRS5Qu9t6f9888",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "mulmulerus1717@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "otp",
+									"value": "44619",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/profile/verify_profile_email",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"profile",
+								"verify_profile_email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Profile Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MThAZ21haWwuY29tIiwicGxheWVyX2lkIjo5LCJwYXNzd29yZCI6IjMyMjUwMTcwYTBkY2E5MmQ1M2VjOTYyNGYzMzZjYTI0In0sImlhdCI6MTY4MTAzODg0MSwiZXhwIjoxNjgxMDQyNDQxfQ.BC6-eEFvicRb8-swwVCQexcI4cjx8lRS5Qu9t6f9888",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "old_password",
+									"value": "pass12345",
+									"type": "text"
+								},
+								{
+									"key": "new_password",
+									"value": "pass123",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "pass123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/profile/change_profile_password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"profile",
+								"change_profile_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Profile Sports",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2OTg1MTY0MTEsImV4cCI6MTY5ODUyMDAxMX0.FSuq97qwlWABrMwPfuII_a7T5swCSDrdrryWUg-E3nA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "token_id",
+									"value": "ku095od6dfkk673d3d739uk37d7f99g4gg76087ydtxgmmgiik",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/profile/view_profile_sports",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"profile",
+								"view_profile_sports"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "Search Players",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDA5NDY1NDMsImV4cCI6MTcwMDk1MDE0M30.d1idYlCAGQoNVEG1hYJZN6eIY4DNGKBTzTVHvm98b9E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "limit",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "search",
+									"value": "meh",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "m",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "12-50",
+									"type": "text"
+								},
+								{
+									"key": "sports",
+									"value": "8,5",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/search/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Challenge",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2ODQ4NzExMjAsImV4cCI6MTY4NDg3NDcyMH0.wcUcY695NSsqxJcerZ8t8jTeUUryI5fO_el2H0ppzCE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "opponent_token",
+									"value": "ku095od6dfkk673d3d739uk37d7f99g4gg76087ydtxgmmgiik",
+									"type": "text"
+								},
+								{
+									"key": "sport_id",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "message",
+									"value": "let's play today",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/search/send_challenge",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search",
+								"send_challenge"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Receive Challenge",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDE1NTMwMjcsImV4cCI6MTcwMTU1NjYyN30.AJmTAFPjWn1711phNqV64J9DRiMahEcgFm7r3KW9kCM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "limit",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/search/receive_challenge",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search",
+								"receive_challenge"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accept Challenge",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2ODUyNjg5NTcsImV4cCI6MTY4NTI3MjU1N30.eY5NRkHFkikHO1sla2DDPVCdcYCNGVctjKfnmSznWBU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "challenge_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/search/accept_challenge",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search",
+								"accept_challenge"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject Challenge",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2ODUyNjg5NTcsImV4cCI6MTY4NTI3MjU1N30.eY5NRkHFkikHO1sla2DDPVCdcYCNGVctjKfnmSznWBU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "challenge_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/search/reject_challenge",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search",
+								"reject_challenge"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Challenges Count",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDIyODcwMjYsImV4cCI6MTcwMjI5MDYyNn0.kL9LsOsA3LvBZq0bwVqnfeAPNxrN_ty262WOwWG3KGM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/search/challenges_count",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search",
+								"challenges_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Challenges Count",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDIyODcwMjYsImV4cCI6MTcwMjI5MDYyNn0.kL9LsOsA3LvBZq0bwVqnfeAPNxrN_ty262WOwWG3KGM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/search/update_challenges_count",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search",
+								"update_challenges_count"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chats",
+			"item": [
+				{
+					"name": "Chat List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDIxNDkxMDIsImV4cCI6MTcwMjE1MjcwMn0.u9I7ewou6Zb_hGqZVvE00RwioQfMTYBLmGgReaYLF8w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "limit",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "search",
+									"value": "rohit",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/chat/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chat Messages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDMzNTEyODIsImV4cCI6MTcwMzM1NDg4Mn0.Sxk_iJwytdc-aNhkoyv174RgJQ-GZjbHOpzASg1TCp4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "challenge_id",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/chat/chat_messages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat",
+								"chat_messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Messages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2ODcyNTQwNjksImV4cCI6MTY4NzI1NzY2OX0.hWkwFVjCndtr7yJFxfTPywXDAQwHtRfH5A7uAJZfxo0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "challenge_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "message",
+									"value": "meet me today",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/chat/send_messages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat",
+								"send_messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Messages Count",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDIyODIxMzYsImV4cCI6MTcwMjI4NTczNn0.inOzQwuUjtcuX5Kr9Ii5e01tjFzVF3V64KU9wchEdUw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/chat/update_message_count",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat",
+								"update_message_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Messages Count",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDIyODIxMzYsImV4cCI6MTcwMjI4NTczNn0.inOzQwuUjtcuX5Kr9Ii5e01tjFzVF3V64KU9wchEdUw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/chat/update_challenges_count",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat",
+								"update_challenges_count"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Results",
+			"item": [
+				{
+					"name": "All Results",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDM2MTY5MDMsImV4cCI6MTcwMzYyMDUwM30.X3fhHsQzHKqmW0bsZP7NGiAnGEIhNfr59xMcwUo-tWE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "status",
+									"value": "complete",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/result/all_result",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"result",
+								"all_result"
+							]
+						},
+						"description": "**status to use:**\n\npending, complete, accept, decline\n\nif kept empty then shows all."
+					},
+					"response": []
+				},
+				{
+					"name": "Result List",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYXJqdW4xNzcxQGdtYWlsLmNvbSIsInBsYXllcl9pZCI6MzksInBhc3N3b3JkIjoiMzIyNTAxNzBhMGRjYTkyZDUzZWM5NjI0ZjMzNmNhMjQifSwiaWF0IjoxNjg3NzIyODgxLCJleHAiOjE2ODc3MjY0ODF9.MrwPlqhBCo9Ngu7cnvQvTYsJtZwQ_igpzsREEJQjs_A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "challenge_id",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/result/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"result",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Result",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2ODc2OTIzNTIsImV4cCI6MTY4NzY5NTk1Mn0.cg7PwuzE9htaj3iyijXdU3LGuNPILCNP_a0ONSN8aH0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "challenge_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "result",
+									"value": "ku095od6dfkk673d3d739uk37d7f99g4gg76087ydtxgmmgiik",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/result/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"result",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authorize",
+			"item": [
+				{
+					"name": "Authorize Validation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "TZo5NgaSySKj54z",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/authorize/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"authorize",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authorize Destroy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2OTcxNDM5MzEsImV4cCI6MTY5NzE0NzUzMX0.LX9er2foUUDmriFhXWIApy5UPeJks1tkDv_0BjXAxRc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/authorize/destroy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"authorize",
+								"destroy"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Block",
+			"item": [
+				{
+					"name": "block_list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDM5NTI3ODQsImV4cCI6MTcwMzk1NjM4NH0.cCRrYrVE-yK_FN3dRkWfCTS4wkQkbauHaaxVaKD5CVU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "limit",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/block/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"block",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add block",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDM5NTI3ODQsImV4cCI6MTcwMzk1NjM4NH0.cCRrYrVE-yK_FN3dRkWfCTS4wkQkbauHaaxVaKD5CVU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "opponent_token_id",
+									"value": "ku0956d6df66673d3d7390g37d7f99g4gg76087ydtxgmmgiik",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/block/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"block",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unblock",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDM5NTI3ODQsImV4cCI6MTcwMzk1NjM4NH0.cCRrYrVE-yK_FN3dRkWfCTS4wkQkbauHaaxVaKD5CVU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "opponent_token_id",
+									"value": "ku0956d6df66673d3d7390g37d7f99g4gg76087ydtxgmmgiik",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/block/unblock",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"block",
+								"unblock"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
