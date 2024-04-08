@@ -58,7 +58,7 @@ exports.view_profile_team = async function (req, res){
                 var findteam = opponentTokenId;
                 var myEmail = "";
             }
-            const [results, datateam] = await sequelize.query("SELECT p.teamname,"+myEmail+"p.gender,p.type,p.age_range,p.register_date,p.profile_img,p.sports_list,p.matches,p.won,p.draw,c.name AS country_name,p.country_id,s.name AS state_name,p.state_id,ct.name AS city_name,p.city_id,p.token_id,IF(p.account_deactive=1,'yes','no') AS account_deactive,(SELECT COALESCE((SELECT 1 FROM `block` WHERE `team_id` = ? AND `opponent_id` = p.id),0)) AS block FROM teams p INNER JOIN `countries` c ON c.`id` = p.`country_id` INNER JOIN `states` s ON s.`id` = p.`state_id` INNER JOIN `cities` ct ON ct.`id` = p.city_id WHERE token_id = ? AND status = 1 LIMIT 1",{ replacements: [teamId,findteam]});
+            const [results, datateam] = await sequelize.query("SELECT p.teamname,"+myEmail+"p.gender,p.type,tt.name AS team_type_name,p.age_range,ar.name AS age_range_name,p.register_date,p.profile_img,p.sports_list,p.matches,p.won,p.draw,c.name AS country_name,p.country_id,s.name AS state_name,p.state_id,ct.name AS city_name,p.city_id,p.token_id,IF(p.account_deactive=1,'yes','no') AS account_deactive,(SELECT COALESCE((SELECT 1 FROM `block` WHERE `team_id` = ? AND `opponent_id` = p.id),0)) AS block FROM teams p INNER JOIN `countries` c ON c.`id` = p.`country_id` INNER JOIN `states` s ON s.`id` = p.`state_id` INNER JOIN `cities` ct ON ct.`id` = p.city_id INNER JOIN `team_type` tt ON tt.id = p.type INNER JOIN `age_range` ar ON ar.id = p.age_range WHERE p.token_id = ? AND p.status = 1 LIMIT 1",{ replacements: [teamId,findteam]});
             if(datateam != ""){//check already exist
                 res.status(200).json({status:true, result:datateam, message:"Profile view successfully!"});
             }else{
@@ -220,7 +220,6 @@ exports.edit_profile = async function (req, res){
         console.log(e); //console log the error so we can see it in the console
         res.status(500).json({status:false, message:e.toString()});
     }
-
 }
 
 /* End of edit profile */
@@ -355,16 +354,16 @@ exports.change_profile_account_setting = async function (req, res){
         var currenttime = components.moment("Y-M-D H:m:s");
 
         const [results, data] = await sequelize.query("SELECT id,account_deactive FROM teams WHERE jwt_token = ? LIMIT 1",{replacements:[auth_token]});
-            if(data != ""){//check already exist
-                var account_deactive = data[0].account_deactive;
-                var team_id = data[0].id;
-                if(account_deactive != account_setting){
-                    await sequelize.query("UPDATE teams SET account_deactive = ?, deactive_date = ? WHERE id = ?",{replacements:[account_setting,currenttime,team_id]});
-                }
-                res.status(200).json({status:true, message:"Account setting updated successfully!"});
-            }else{
-                res.status(200).json({status:false, message:"team not found, please try again!"});
+        if(data != ""){//check already exist
+            var account_deactive = data[0].account_deactive;
+            var team_id = data[0].id;
+            if(account_deactive != account_setting){
+                await sequelize.query("UPDATE teams SET account_deactive = ?, deactive_date = ? WHERE id = ?",{replacements:[account_setting,currenttime,team_id]});
             }
+            res.status(200).json({status:true, message:"Account setting updated successfully!"});
+        }else{
+            res.status(200).json({status:false, message:"team not found, please try again!"});
+        }
 
     } catch(e) {
         console.log(e); //console log the error so we can see it in the console
