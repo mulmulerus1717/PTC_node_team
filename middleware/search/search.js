@@ -96,9 +96,55 @@ const validateRule = (req, res, next) => {
     })
 }
 
+
+/* Search city sports Validation */
+const validationRulesCitySports = () => {
+    return [
+
+        // sport_id validation
+        body('limit')
+            .trim()
+            .notEmpty().withMessage('Limit cannot be enter.')
+            .matches(/^[0-9\s]+$/).withMessage('Limit must be integer.')
+            .isInt({ min:1}).withMessage('Please enter Limit, more than 0')
+            .isNumeric().withMessage('Limit cannot be text.')
+            .escape(),
+
+        // sport_id validation
+        body('offset')
+            .trim()
+            .matches(/^[0-9\s]+$/).withMessage('Offset must be integer.')
+            .isNumeric().withMessage('Offset cannot be text.')
+            .escape(),
+    ]
+}
+
+/* Send challenge code */
+
+
+/* Add sports code */
+const validationRulesAddSport = () => {
+    return [
+
+        // sports id validation
+        body('sport_id')
+            .trim()
+            .notEmpty().withMessage('Sport id cannot be enter.')
+            .matches(/^[0-9\s]+$/).withMessage('Sport id must be integer.')
+            .isInt({ min:1}).withMessage('Please select correct sport id')
+            .isNumeric().withMessage('Sport id cannot be text.')
+            .escape(),
+    ]
+}
+/* End of add sports code */
+
+
+
 module.exports = {
     validateRule,
     validationRulesSearch,
     validationRules,
-    validationRulesAccept
+    validationRulesAccept,
+    validationRulesCitySports,
+    validationRulesAddSport
 }

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 //Middleware
-const { validateRule,validationRulesSearch,validationRules,validationRulesAccept } = require.main.require('../middleware/search/search.js')
+const { validateRule,validationRulesSearch,validationRules,validationRulesAccept,validationRulesCitySports,validationRulesAddSport } = require.main.require('../middleware/search/search.js')
 const validationRulesToken = require.main.require('../routes/token.js');
 
 //Model
@@ -47,6 +47,17 @@ router.get('/challenges_count', validationRulesToken(), validateRule, function(r
 /* update count challenges. */
 router.get('/update_challenges_count', validationRulesToken(), validateRule, function(req, res, next) {
     searchModel.update_challenges_count(req, res);
+});
+
+
+/* Search city sports. */
+router.post('/city_sports', validationRulesToken(), validationRulesCitySports(), validateRule, function(req, res, next) {
+    searchModel.search_city_sports(req, res);
+});
+
+/* Add city sports. */
+router.post('/add_sports', validationRulesToken(), validationRulesAddSport(), validateRule, function(req, res, next) {
+    searchModel.add_sports_city(req, res);
 });
 
 module.exports = router;

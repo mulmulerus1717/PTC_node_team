@@ -62,7 +62,7 @@ exports.search_team = async function (req, res){
                         var total_records_teams = totalRecordsteams.length;
                         res.status(200).json({status:true, result:dataFindteam, message:"Teams found successfully!", total:count_team, total_records:total_records_teams, team_playing_sports:teamsPlayingSport });
                     }else{
-                        res.status(200).json({status:true, result:"",message:"No teams found by this sports!",total:0,total_records:0});
+                        res.status(200).json({status:true, result:"",message:"No teams found by this sports!",total:0,total_records:0,team_playing_sports:[]});
                     }
                 }else{
                     res.status(200).json({status:true, result:"",message:"No sports added by team found!"});
@@ -307,3 +307,85 @@ exports.update_challenges_count = async function (req, res){
     }
 }    
 /* update message count ends */
+
+
+/* Search sports from city Start */
+exports.search_city_sports = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var authorization = req.header('authorization');
+        var auth_token = (authorization).split(" ")[1];
+
+        var limit = req.body.limit;
+        var offset = req.body.offset;
+        var searchSports = "";
+        var searchSportsTrim = req.body.search;
+
+        if(searchSportsTrim !== null && searchSportsTrim !== "" && searchSportsTrim !== undefined && components.preg_match("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z0-9 ]$",searchSportsTrim) === false){
+            var searchSports = (searchSportsTrim).trim();
+        }
+
+        var whereCondition = "";
+        //Filter sports by name
+        if(searchSports !== "" && searchSports !== null && searchSports !== undefined){ whereCondition += " AND s.name LIKE '%"+searchSports+"%' ";}
+
+            const [results, data] = await sequelize.query("SELECT id,country_id,state_id,city_id FROM teams WHERE jwt_token = ? AND status = 1 LIMIT 1",{replacements:[auth_token]});
+            if(data == ""){//check already exist
+                res.status(200).json({status:false, message:"team not found, please login again!"});
+            }else{
+                var team_id = data[0].id;
+                var country_id = data[0].country_id;
+                var state_id = data[0].state_id;
+                var city_id = data[0].city_id;
+                const [resultsChallenges, challenges_total] = await sequelize.query("SELECT 1 FROM ( SELECT COUNT(s.id) as total, s.name FROM `teams` t INNER JOIN teams_sports ts ON ts.team_id = t.id INNER JOIN sports s ON s.id = ts.sport_id WHERE t.`city_id` = ? AND t.id != ? AND t.status = 1 AND t.account_deactive = 0 "+whereCondition+" AND t.id NOT IN (SELECT `opponent_id` FROM block WHERE team_id = ?) GROUP BY s.name ) AS t ORDER BY total DESC",{replacements:[city_id,team_id,team_id]});
+                const [results, dataSport] = await sequelize.query("SELECT * FROM ( SELECT COUNT(s.id) as total, s.name, s.id as sport_id FROM `teams` t INNER JOIN teams_sports ts ON ts.team_id = t.id INNER JOIN sports s ON s.id = ts.sport_id WHERE t.`city_id` = ? AND t.id != ? AND t.status = 1 AND t.account_deactive = 0 "+whereCondition+" AND t.id NOT IN (SELECT `opponent_id` FROM block WHERE team_id = ?) GROUP BY s.name ) AS t ORDER BY total DESC LIMIT "+limit+" OFFSET "+offset+"",{replacements:[city_id,team_id,team_id]});
+                if(dataSport!=""){
+                    var total_records_sports = challenges_total.length;
+                    var count_sports = dataSport.length;
+                    res.status(200).json({status:true, result:dataSport, total:count_sports, total_records:total_records_sports, message:"Sports found from your city!"});
+                }else{
+                    res.status(200).json({status:true, result:"",message:"No sports found!"});
+                }
+            }
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+
+/* Search sports from city End */
+
+
+/* Reject challenge */
+exports.add_sports_city = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var authorization = req.header('authorization');
+        var auth_token = (authorization).split(" ")[1];
+
+        var sport_id = req.body.sport_id;
+
+        const [results, data] = await sequelize.query("SELECT id,sports_list FROM teams WHERE jwt_token = ? AND account_deactive = 0 AND status = 1 LIMIT 1",{replacements:[auth_token]});
+        if(data == ""){//check already exist
+            res.status(200).json({status:false, message:"Team not found, please login again!"});
+        }else{
+            var team_id = data[0].id;
+            var sports_list = data[0].sports_list;
+            const [results, sports_data] = await sequelize.query("SELECT 1 FROM `teams_sports` WHERE team_id = ? AND sport_id = ?",{replacements:[team_id,sport_id]});
+            if(sports_data == ""){
+                const [results, dataSport] = await sequelize.query("SELECT id,name FROM sports WHERE id = ? AND status = 1 LIMIT 1",{ replacements:[sport_id]});
+                var updateSports = sports_list + dataSport[0].name+",";
+                await sequelize.query("INSERT INTO teams_sports (team_id,sport_id) VALUES (?,?)",{replacements:[team_id,sport_id]});
+                await sequelize.query("UPDATE teams SET sports_list = ? WHERE id = ?",{replacements:[updateSports,team_id]});
+                res.status(200).json({status:true, result:"", message:"Sport added successfully!"});
+            }else{
+                res.status(200).json({status:true, result:"", message:"This sports already added in your sports list!"});
+            }
+        }
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* End of Reject challenge */
