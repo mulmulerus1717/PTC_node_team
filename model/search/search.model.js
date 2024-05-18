@@ -62,7 +62,7 @@ exports.search_team = async function (req, res){
                         var total_records_teams = totalRecordsteams.length;
                         res.status(200).json({status:true, result:dataFindteam, message:"Teams found successfully!", total:count_team, total_records:total_records_teams, team_playing_sports:teamsPlayingSport });
                     }else{
-                        res.status(200).json({status:true, result:"",message:"No teams found by this sports!",total:0,total_records:0,team_playing_sports:[]});
+                        res.status(200).json({status:true, result:"",message:"No teams found by this sports!",total:0,total_records:0, team_playing_sports:[]});
                     }
                 }else{
                     res.status(200).json({status:true, result:"",message:"No sports added by team found!"});
@@ -87,52 +87,59 @@ exports.send_challenge = async function (req, res){
 
         var opponent_token = req.body.opponent_token;
         var sport_id_challenge = req.body.sport_id;
+        var place = req.body.place;
         var match = req.body.match;
+        var amount = req.body.amount == '' ? 0 : req.body.amount;
         var challenge_message = req.body.message;
         var currenttime = components.moment("Y-M-D H:m:s");
-
-        const [results, data] = await sequelize.query("SELECT id,teamname,country_id,state_id,city_id FROM teams WHERE jwt_token = ? AND account_deactive = 0 AND status = 1 LIMIT 1",{replacements:[auth_token]});
-        if(data == ""){//check already exist
-            res.status(200).json({status:false, message:"team not found, please login again!"});
+        
+        
+        if(match == "1" && (amount == "" || amount == "0")){
+            res.status(200).json({status:false, message:"Amount cannot be empty for losers pay match."});
         }else{
-            var team_id = data[0].id;
-            var country_id = data[0].country_id;
-            var state_id = data[0].state_id;
-            var city_id = data[0].city_id;
-            var teamname = components.capitalText(data[0].teamname);
-
-            const [results, dataSport] = await sequelize.query("SELECT GROUP_CONCAT(sport_id) AS sports_id FROM `teams_sports` WHERE team_id = ? AND status = 1",{replacements:[team_id]});
-            if(dataSport!=""){
-                var sports_id = dataSport[0].sports_id;
-                const [results, dataFindteam] = await sequelize.query("SELECT p.id FROM `teams` p INNER JOIN `teams_sports` ps ON p.id = ps.team_id WHERE p.token_id = ? AND p.status = 1 AND account_deactive = 0 AND p.country_id = ? AND p.state_id = ? AND p.city_id = ? AND ps.sport_id IN ("+sports_id+") AND ps.status = 1 AND p.id NOT IN (SELECT b.opponent_id FROM block b WHERE b.team_id = ?) AND p.id NOT IN (SELECT b.team_id FROM block b WHERE b.team_id = p.id AND b.opponent_id = ?) GROUP BY p.id",{replacements:[opponent_token,country_id,state_id,city_id,team_id,team_id]});
-                if(dataFindteam!=""){
-                    var opponent_id = dataFindteam[0].id;
-                    const [results, teams_challenges] = await sequelize.query("SELECT 1 FROM `teams_challenges` pc WHERE accept_status != 2 AND sport_id = ? AND team_id = ? AND opponent_id = ?",{replacements:[sport_id_challenge,team_id,opponent_id]});
-                    if(teams_challenges!=""){
-                        res.status(200).json({status:true, result:"",message:"Challenge already send to opponent!"});
-                    }else{
-                        await sequelize.query("INSERT INTO teams_challenges (team_id,opponent_id,sport_id,message,match_contest,added_date) VALUES (?,?,?,?,?,?)",{replacements:[team_id,opponent_id,sport_id_challenge,challenge_message,match,currenttime]});
-                        
-                        /* Start add notification */
-                        var sports_game_name = "";
-                        const [results, sport_name] = await sequelize.query("SELECT name FROM `sports` WHERE id = ?",{replacements:[sport_id_challenge]});
-                        if(sport_name!=""){
-                            sports_game_name = " for " + sport_name[0].name;
+            const [results, data] = await sequelize.query("SELECT id,teamname,country_id,state_id,city_id FROM teams WHERE jwt_token = ? AND account_deactive = 0 AND status = 1 LIMIT 1",{replacements:[auth_token]});
+            if(data == ""){//check already exist
+                res.status(200).json({status:false, message:"team not found, please login again!"});
+            }else{
+                var team_id = data[0].id;
+                var country_id = data[0].country_id;
+                var state_id = data[0].state_id;
+                var city_id = data[0].city_id;
+                var teamname = components.capitalText(data[0].teamname);
+    
+                const [results, dataSport] = await sequelize.query("SELECT GROUP_CONCAT(sport_id) AS sports_id FROM `teams_sports` WHERE team_id = ? AND status = 1",{replacements:[team_id]});
+                if(dataSport!=""){
+                    var sports_id = dataSport[0].sports_id;
+                    const [results, dataFindteam] = await sequelize.query("SELECT p.id FROM `teams` p INNER JOIN `teams_sports` ps ON p.id = ps.team_id WHERE p.token_id = ? AND p.status = 1 AND account_deactive = 0 AND p.country_id = ? AND p.state_id = ? AND p.city_id = ? AND ps.sport_id IN ("+sports_id+") AND ps.status = 1 AND p.id NOT IN (SELECT b.opponent_id FROM block b WHERE b.team_id = ?) AND p.id NOT IN (SELECT b.team_id FROM block b WHERE b.team_id = p.id AND b.opponent_id = ?) GROUP BY p.id",{replacements:[opponent_token,country_id,state_id,city_id,team_id,team_id]});
+                    if(dataFindteam!=""){
+                        var opponent_id = dataFindteam[0].id;
+                        const [results, teams_challenges] = await sequelize.query("SELECT 1 FROM `teams_challenges` pc WHERE accept_status != 2 AND sport_id = ? AND team_id = ? AND opponent_id = ?",{replacements:[sport_id_challenge,team_id,opponent_id]});
+                        if(teams_challenges!=""){
+                            res.status(200).json({status:true, result:"",message:"Challenge already send to opponent!"});
+                        }else{
+                            await sequelize.query("INSERT INTO teams_challenges (team_id,opponent_id,sport_id,message,location,match_contest,amount,added_date) VALUES (?,?,?,?,?,?,?,?)",{replacements:[team_id,opponent_id,sport_id_challenge,challenge_message,place,match,amount,currenttime]});
+                            
+                            /* Start add notification */
+                            var sports_game_name = "";
+                            const [results, sport_name] = await sequelize.query("SELECT name FROM `sports` WHERE id = ?",{replacements:[sport_id_challenge]});
+                            if(sport_name!=""){
+                                sports_game_name = " for " + sport_name[0].name;
+                            }
+                            var description = teamname + " sent you challenge" + sports_game_name + ".";
+                            var link = "/challenges";
+                            await sequelize.query("INSERT INTO notifications (team_id,opponent_id,description,link,date) VALUES (?,?,?,?,?)",{replacements:[opponent_id,team_id,description,link,currenttime]});
+                            /* End add notification */
+    
+                            res.status(200).json({status:true, result:"",message:"Challenge successfully send to your opponent!"});
                         }
-                        var description = teamname + " sent you challenge" + sports_game_name + ".";
-                        var link = "/challenges";
-                        await sequelize.query("INSERT INTO notifications (team_id,opponent_id,description,link,date) VALUES (?,?,?,?,?)",{replacements:[opponent_id,team_id,description,link,currenttime]});
-                        /* End add notification */
-
-                        res.status(200).json({status:true, result:"",message:"Challenge successfully send to your opponent!"});
+                    }else{
+                        res.status(200).json({status:true, result:"",message:"No teams found by this token id!"});
                     }
                 }else{
-                    res.status(200).json({status:true, result:"",message:"No teams found by this token id!"});
+                    res.status(200).json({status:true, result:"",message:"No sports added by team found!"});
                 }
-            }else{
-                res.status(200).json({status:true, result:"",message:"No sports added by team found!"});
+                
             }
-            
         }
 
     } catch(e) {
@@ -157,7 +164,7 @@ exports.receive_challenge = async function (req, res){
         }else{
             var team_id = data[0].id;
             const [resultsChallenges, challenges_total] = await sequelize.query("SELECT 1 FROM `teams_challenges` pc INNER JOIN `teams` p ON pc.`team_id` = p.`id` INNER JOIN `sports` s ON s.`id` = pc.`sport_id` WHERE pc.accept_status = 0 AND pc.opponent_id = ? AND p.`status` = 1 AND s.`status` = 1 AND pc.block = 0",{replacements:[team_id]});
-            const [results, teams_challenges] = await sequelize.query("SELECT p.teamname,p.gender,tt.name AS type_name,ag.name AS age_range,p.token_id as opponent_token_id,p.`profile_img`,p.matches,p.won,p.draw,pc.id AS challenge_id,s.name AS sport_name,pc.match_contest,pc.message AS challenge_message,pc.added_date AS date FROM `teams_challenges` pc INNER JOIN `teams` p ON pc.`team_id` = p.`id` INNER JOIN `sports` s ON s.`id` = pc.`sport_id` INNER JOIN team_type tt ON tt.id = p.type INNER JOIN age_range ag ON ag.id = p.age_range WHERE pc.accept_status = 0 AND pc.opponent_id = ? AND p.`status` = 1 AND s.`status` = 1 AND pc.block = 0 ORDER BY pc.id DESC LIMIT "+limit+" OFFSET "+offset+"",{replacements:[team_id]});
+            const [results, teams_challenges] = await sequelize.query("SELECT p.teamname,p.gender,tt.name AS type_name,ag.name AS age_range,p.token_id as opponent_token_id,p.`profile_img`,p.matches,p.won,p.draw,pc.id AS challenge_id,s.name AS sport_name,pc.match_contest,IF(pc.match_contest=0,'Friendly match','Losers pay match') AS match_contest_name,pln.name AS location_place,pc.amount,pc.match_contest,pc.message AS challenge_message,pc.added_date AS date FROM `teams_challenges` pc INNER JOIN `teams` p ON pc.`team_id` = p.`id` INNER JOIN `sports` s ON s.`id` = pc.`sport_id` INNER JOIN team_type tt ON tt.id = p.type INNER JOIN age_range ag ON ag.id = p.age_range LEFT JOIN play_location pln ON pln.id = pc.location WHERE pc.accept_status = 0 AND pc.opponent_id = ? AND p.`status` = 1 AND s.`status` = 1 AND pc.block = 0 ORDER BY pc.id DESC LIMIT "+limit+" OFFSET "+offset+"",{replacements:[team_id]});
             if(teams_challenges!=""){
                 var count_team = teams_challenges.length;
                 var total_records_teams = challenges_total.length;
@@ -356,7 +363,7 @@ exports.search_city_sports = async function (req, res){
 /* Search sports from city End */
 
 
-/* Reject challenge */
+/* Start add sports city */
 exports.add_sports_city = async function (req, res){ 
     try{
         res.setHeader('Content-Type','application/json');
@@ -379,7 +386,7 @@ exports.add_sports_city = async function (req, res){
                 await sequelize.query("UPDATE teams SET sports_list = ? WHERE id = ?",{replacements:[updateSports,team_id]});
                 res.status(200).json({status:true, result:"", message:"Sport added successfully!"});
             }else{
-                res.status(200).json({status:true, result:"", message:"This sports already added in your sports list!"});
+                res.status(200).json({status:false, result:"", message:"This sports already added in your sports list!"});
             }
         }
 
@@ -388,4 +395,5 @@ exports.add_sports_city = async function (req, res){
         res.status(500).json({status:false, message:e.toString()});
     }
 }
-/* End of Reject challenge */
+/* End of add sports city */
+
