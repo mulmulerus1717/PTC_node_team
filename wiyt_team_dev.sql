@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2024 at 01:02 PM
+-- Generation Time: May 19, 2024 at 10:38 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,8 +18,31 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `wiyt_team_dev`
+-- Database: `wiyt_dev2`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `age_range`
+--
+
+CREATE TABLE `age_range` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `age_range`
+--
+
+INSERT INTO `age_range` (`id`, `name`, `status`) VALUES
+(1, '5 to 12 years', 1),
+(2, '13 to 18 years', 1),
+(3, '19 to 45 years', 1),
+(4, '46 to 60 years', 1),
+(5, '61 and above', 1);
 
 -- --------------------------------------------------------
 
@@ -28,6 +51,19 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `block` (
+  `id` int(11) NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `opponent_id` int(11) NOT NULL,
+  `date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `block_team`
+--
+
+CREATE TABLE `block_team` (
   `id` int(11) NOT NULL,
   `team_id` int(11) NOT NULL,
   `opponent_id` int(11) NOT NULL,
@@ -7662,27 +7698,460 @@ INSERT INTO `countries` (`id`, `sortname`, `name`) VALUES
 
 CREATE TABLE `notifications` (
   `id` int(11) NOT NULL,
-  `team_id` int(11) DEFAULT NULL,
+  `player_id` int(11) DEFAULT NULL,
   `opponent_id` int(11) NOT NULL,
   `description` text DEFAULT NULL,
   `link` varchar(355) DEFAULT NULL,
   `date` datetime NOT NULL,
   `seen` tinyint(1) NOT NULL DEFAULT 0,
-  `notify` tinyint(1) NOT NULL DEFAULT 0
+  `notify` tinyint(1) NOT NULL DEFAULT 0,
+  `team` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `notifications`
 --
 
-INSERT INTO `notifications` (`id`, `team_id`, `opponent_id`, `description`, `link`, `date`, `seen`, `notify`) VALUES
-(1, 39, 12, 'Rushikesh Mulmule sent you challenge for cricket.', '/challenege', '2024-03-10 02:45:13', 0, 0),
-(2, 39, 12, 'rushikesh mulmule added result of match for Baseball.', '/result', '2024-03-14 01:27:19', 0, 0),
-(3, 39, 12, 'Rushikesh Mulmule added result of match for Baseball.', '/result', '2024-03-14 01:36:24', 0, 0),
-(4, 2, 2, 'Chennai super kings sent you challenge for Baseball.', '/challenges', '2024-03-27 00:13:59', 0, 0),
-(5, 2, 1, 'Mumbai indians sent you challenge for Baseball.', '/challenges', '2024-03-27 00:48:38', 0, 0),
-(6, 1, 2, 'Chennai super kings accepted you challenge for Baseball.', '/chat?challenge_id=1', '2024-03-27 01:37:21', 0, 0),
-(7, 1, 2, 'Chennai super kings added match result for Baseball.', '/result', '2024-03-28 01:27:31', 0, 0);
+INSERT INTO `notifications` (`id`, `player_id`, `opponent_id`, `description`, `link`, `date`, `seen`, `notify`, `team`) VALUES
+(1, 39, 12, 'Rushikesh Mulmule sent you challenge for cricket.', '/challenege', '2024-03-10 02:45:13', 0, 0, 0),
+(2, 39, 12, 'rushikesh mulmule added result of match for Baseball.', '/result', '2024-03-14 01:27:19', 0, 0, 0),
+(3, 39, 12, 'Rushikesh Mulmule added result of match for Baseball.', '/result', '2024-03-14 01:36:24', 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications_team`
+--
+
+CREATE TABLE `notifications_team` (
+  `id` int(11) NOT NULL,
+  `team_id` int(11) DEFAULT NULL,
+  `opponent_id` int(11) NOT NULL,
+  `description` text DEFAULT NULL,
+  `link` varchar(355) DEFAULT NULL,
+  `date` datetime NOT NULL,
+  `seen` tinyint(1) NOT NULL DEFAULT 0,
+  `notify` tinyint(1) NOT NULL DEFAULT 0,
+  `player` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `notifications_team`
+--
+
+INSERT INTO `notifications_team` (`id`, `team_id`, `opponent_id`, `description`, `link`, `date`, `seen`, `notify`, `player`) VALUES
+(17, 12, 2, 'Rushikesh Mulmule sent you join request.', '/players', '2024-05-19 21:17:23', 0, 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `players`
+--
+
+CREATE TABLE `players` (
+  `id` int(11) NOT NULL,
+  `firstname` varchar(55) DEFAULT NULL,
+  `lastname` varchar(55) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  `age` int(11) NOT NULL,
+  `gender` enum('m','f','o') NOT NULL,
+  `otp` int(11) NOT NULL,
+  `otp_verify` tinyint(1) NOT NULL DEFAULT 0,
+  `register_date` datetime NOT NULL,
+  `sport_id` int(11) NOT NULL DEFAULT 0,
+  `password` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `forget_password` tinyint(1) NOT NULL DEFAULT 0,
+  `last_login` datetime DEFAULT NULL,
+  `country_id` int(11) NOT NULL,
+  `state_id` int(11) NOT NULL,
+  `city_id` int(11) NOT NULL,
+  `ip_address` varchar(85) NOT NULL,
+  `jwt_token` text DEFAULT NULL,
+  `token_id` varchar(55) DEFAULT NULL,
+  `profile_img` varchar(255) DEFAULT NULL,
+  `tshirt_number` int(11) DEFAULT NULL,
+  `sports_list` text DEFAULT NULL,
+  `last_update` datetime DEFAULT NULL,
+  `update_email` tinyint(1) NOT NULL DEFAULT 0,
+  `new_email` varchar(255) DEFAULT NULL,
+  `matches` int(11) NOT NULL DEFAULT 0,
+  `won` int(11) NOT NULL DEFAULT 0,
+  `draw` int(11) NOT NULL DEFAULT 0,
+  `account_deactive` tinyint(1) NOT NULL DEFAULT 0,
+  `deactive_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `players`
+--
+
+INSERT INTO `players` (`id`, `firstname`, `lastname`, `email`, `dob`, `age`, `gender`, `otp`, `otp_verify`, `register_date`, `sport_id`, `password`, `status`, `forget_password`, `last_login`, `country_id`, `state_id`, `city_id`, `ip_address`, `jwt_token`, `token_id`, `profile_img`, `tshirt_number`, `sports_list`, `last_update`, `update_email`, `new_email`, `matches`, `won`, `draw`, `account_deactive`, `deactive_date`) VALUES
+(12, 'Rushikesh', 'mulmule', 'mulmulerus1717@gmail.com', '1995-12-20', 28, 'm', 26159, 0, '2023-05-14 23:15:47', 1, '32250170a0dca92d53ec9624f336ca24', 1, 0, '2024-05-19 21:08:44', 101, 22, 1679, '::1', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTYxMzMxMjQsImV4cCI6MTcxNjEzNjcyNH0.r02Ir-o6MyP3HqUQYAaBol-tAwpyn_vMQzRk6J5-IwQ', '987t76d6dfdg673d3d73d7g37d7fggg4gg767ffydtxgmmgjkk', '1699880611564player.png', 17, 'Biathlon,Baseball,', '2024-03-02 21:40:35', 0, 'mulmulerus1718@gmail.com', 1, 1, 0, 0, '2024-03-02 21:46:08'),
+(13, 'meheresh', 'mulmule', 'meheresh1717@gmail.com', '1995-12-20', 27, 'm', 81521, 0, '2023-05-14 23:41:45', 1, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, '987t76d6dfdg673d3d73d7g37d7fggg4gg767ffydtxgmmgiik', NULL, NULL, NULL, NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(14, 'meheresh', 'mulmule', 'rohit1717@gmail.com', '1995-12-20', 27, 'm', 23152, 0, '2023-05-16 23:57:32', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, '987t76d6dfdg673d3d73d7g37d7f99g4gg767ffydtxgmmgiik', NULL, NULL, NULL, NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(15, 'meheresh', 'mulmule', 'mohit1717@gmail.com', '1995-12-20', 27, 'm', 20781, 0, '2023-05-17 00:00:20', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, '987t76d6dfkk673d3d73d7g37d7f99g4gg767ffydtxgmmgiik', NULL, NULL, NULL, NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(16, 'meheresh', 'mulmule', 'kholi1717@gmail.com', '1995-12-20', 27, 'm', 73917, 0, '2023-05-17 00:01:01', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'I07t76d6dfkk673d3d73d7g37d7f99g4gg767ffydtxgmmgiik', NULL, NULL, NULL, NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(17, 'meheresh', 'mulmule', 'polard1771@gmail.com', '1995-12-20', 27, 'm', 59657, 0, '2023-05-17 00:03:37', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'ku0776d6dfkk673d3d73d7g37d7f99g4gg767ffydtxgmmgiik', NULL, NULL, NULL, NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(18, 'meheresh', 'mulmule', 'dhoni1771@gmail.com', '1995-12-20', 27, 'm', 5557, 0, '2023-05-17 00:04:13', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'ku0956d6dfkk673d3d7390g37d7f99g4gg767ffydtxgmmgiik', NULL, NULL, NULL, NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(19, 'meheresh', 'mulmule', 'rahul1771@gmail.com', '1995-12-20', 27, 'm', 43974, 0, '2023-05-17 00:04:47', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'ku0956d6dfkk673d3d7390g37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, NULL, NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(20, 'meheresh', 'mulmule', 'sachin1771@gmail.com', '1995-12-20', 27, 'm', 69919, 0, '2023-05-17 00:09:16', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'ku0956d6dfkk673d3d7390g9997f99g4gg76087ydtxgmmgiik', NULL, NULL, NULL, NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(21, 'meheresh', 'mulmule', 'raina1771@gmail.com', '1995-12-20', 27, 'm', 12850, 0, '2023-05-17 00:12:33', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'ku0956d6991k673d3d7390g37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, NULL, NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(23, 'meheresh', 'mulmule', 'nehera1771@gmail.com', '1995-12-20', 27, 'm', 64256, 0, '2023-05-17 00:14:42', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'ku0956d6df66673d3d7390g37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, NULL, NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(24, 'meheresh', 'mulmule', 'piyush1771@gmail.com', '1995-12-20', 27, 'm', 64486, 0, '2023-05-17 00:16:50', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'ku0956d6dfg5g73d3d7390g37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, NULL, NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(25, 'meheresh', 'mulmule', 'jadega1771@gmail.com', '1995-12-20', 27, 'm', 31317, 0, '2023-05-17 00:18:05', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'o50956d6dfkk673d3d7390g37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, NULL, NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(26, 'meheresh', 'mulmule', 'tim1771@gmail.com', '1995-12-20', 27, 'm', 69813, 0, '2023-05-17 00:20:48', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, '2023-12-29 00:03:59', 101, 22, 1679, '::1', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGltMTc3MUBnbWFpbC5jb20iLCJwbGF5ZXJfaWQiOjI2LCJwYXNzd29yZCI6IjMyMjUwMTcwYTBkY2E5MmQ1M2VjOTYyNGYzMzZjYTI0In0sImlhdCI6MTcwMzc4ODQzOSwiZXhwIjoxNzAzNzkyMDM5fQ.NFPBBOuv9lmOlzoRvlZM4trj0ugveLWrL6U_OxQX_mQ', 'ku0956d6dfkk673d3d7390g37d7f99g4gip6087ydtxgmmgiik', '17037899113630_298267294_1415948208916637_6669194162747201464_n.jpg', NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(27, 'meheresh', 'mulmule', 'ashwin1771@gmail.com', '1995-12-20', 27, 'm', 90275, 0, '2023-05-17 00:21:46', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, '998956d6dfkk673d3d7390g37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(28, 'meheresh', 'mulmule', 'bhuneshwar1771@gmail.com', '1995-12-20', 27, 'm', 64030, 0, '2023-05-17 00:23:36', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, '890956d6dfkk673d3d7390g37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(29, 'meheresh', 'mulmule', 'bhumbra1771@gmail.com', '1995-12-20', 27, 'm', 71098, 0, '2023-05-17 00:24:41', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'mm0956d6dfkk673d3d9090g37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(30, 'meheresh', 'mulmule', 'ishan1771@gmail.com', '1995-12-20', 27, 'm', 47239, 0, '2023-05-17 00:27:39', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, '950956d6df90673d3d7390g37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(31, 'meheresh', 'mulmule', 'gell1771@gmail.com', '1995-12-20', 27, 'm', 11372, 0, '2023-05-17 00:29:27', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'lm0956d6dfkk673d3o7390g37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(32, 'meheresh', 'mulmule', 'maxwell1771@gmail.com', '1995-12-20', 27, 'm', 28137, 0, '2023-05-17 00:31:29', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'lk0956d6dfkk679u3d7390g37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(33, 'meheresh', 'mulmule', 'maxwell11771@gmail.com', '1995-12-20', 27, 'm', 66489, 0, '2023-05-17 00:32:20', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'kuut56d6dfkk673d3d7390g37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(34, 'meheresh', 'mulmule', 'maxwell211771@gmail.com', '1995-12-20', 27, 'm', 11435, 0, '2023-05-17 00:32:51', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'kul956d6dfkk673d3d7110g37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(35, 'meheresh', 'mulmule', 'maxwell22211771@gmail.com', '1995-12-20', 27, 'm', 77887, 0, '2023-05-17 00:33:26', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'ku0956d6dfkk67873d7390g37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(36, 'meheresh', 'mulmule', 'maxwe2ll22211771@gmail.com', '1995-12-20', 27, 'm', 47561, 0, '2023-05-17 00:34:48', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'ku0956d6df8d673d3d7390g37d7f99g4gip6087ydtxgmmgiik', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(37, 'meheresh', 'mulmule', 'maxwe72ll22211771@gmail.com', '1995-12-20', 27, 'm', 18738, 0, '2023-05-17 00:35:45', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'ku0956d6dfkk673d3d7390g37d7km9g4gg76087ydtxgmmgiik', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(38, 'meheresh', 'mulmule', 'maxwe72ll232211771@gmail.com', '1995-12-20', 27, 'm', 5548, 0, '2023-05-17 00:36:53', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'ku0956d6dfkk673d3d7390g37d7f99g4gg76087ydtxgmmjgik', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(39, 'rohit', 'sharma', 'rohit@gmail.com', '1995-12-20', 27, 'm', 45081, 0, '2023-05-17 00:38:53', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, '2023-12-31 15:03:50', 101, 22, 1679, '::1', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoicm9oaXRAZ21haWwuY29tIiwicGxheWVyX2lkIjozOSwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDQwMTUyMzAsImV4cCI6MTcwNDAxODgzMH0.nVZxUA_cO1_JVhHPSK54gMRSgXPtXAJ-ZyyaejQjLE0', 'ku095od6dfkk673d3d739uk37d7f99g4gg76087ydtxgmmgiik', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(41, 'meheresh', 'mulmule', 'arjun1771kk@gmail.com', '1995-12-20', 27, 'm', 60519, 0, '2023-10-02 17:41:54', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'QyUBvCnoOEGLIIrDEAIGeBxdkihkfYPzh4hCVnkMqu6Qt1bn8d', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(42, 'rushikesh', 'mulmule', 'mulmule@gmail.com', '2023-08-02', 0, 'm', 79568, 0, '2023-10-03 00:54:10', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, '6nFTh7dYBGZrj4aUmpQIzSCMN5nBJFhEc8eaNRwjtC7lKfqWAT', NULL, NULL, 'Aquatics,Athletics,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(43, 'rushikesh', 'mulmule', 'mulmulerus@gmail.com', '2023-09-01', 0, 'm', 1730, 0, '2023-10-03 01:06:11', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'X3FEtDeVoNsbRQWAv8GoX6kcXLqu5ipN6l9Kkls4Ozo0nOI0qB', NULL, NULL, 'Cricket,Archery,Badminton,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(44, 'rushikesh', 'mulmule', 'mulmulerus22@gmail.com', '2023-09-01', 0, 'm', 71117, 0, '2023-10-03 01:12:43', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'QEwi7T9KbunluufW73zNxh1CP5I2gCAI4Vo7ksj5LJUr31JTUF', NULL, NULL, 'Cricket,Archery,Badminton,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(45, 'meheresh', 'mulmule', 'arjun1771kllk@gmail.com', '1995-12-20', 27, 'f', 42229, 0, '2023-10-06 00:11:43', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'rUwUy9Hv84UDdvRwBX3FSysA12imy8AxoijXTpEeoDhirRdKDa', NULL, NULL, 'Cricket,Croquet,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(46, 'rushi', 'mulmule', 'mulmule1111@gmail.com', '2023-06-01', 0, 'm', 46155, 0, '2023-10-06 01:36:54', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'EQP191pz8ycwAEjdVA98t4WqUR5lH3mGIQG5nv4QmLEztiUR2f', NULL, NULL, 'Aquatics,Athletics,Basketball,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(47, 'rushikesh', 'mulmule', 'mulmule99@gmail.com', '2023-05-01', 0, 'm', 77022, 0, '2023-10-06 01:41:46', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'bDszxZ34csFs4CY3IV9bJXwgpfAdGnvevJJe8XMhTL6zVfJDGv', NULL, NULL, 'Archery,Badminton,Basketball,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(48, 'rushikesh', 'mulmule', 'mulmule99k@gmail.com', '2023-05-01', 0, 'm', 18293, 0, '2023-10-06 01:47:55', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'MWdlHJCCe7xBegOcn87tbTAzUmTSckv5hKHCcdFxSvhj1rqiT4', NULL, NULL, 'Archery,Badminton,Basketball,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(49, 'rushikesh', 'mulmule', 'mulmule99ko@gmail.com', '2023-05-01', 0, 'm', 99790, 0, '2023-10-06 02:01:59', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'HbdtNlkKgjIRINKolpXaQ1dw2KnzSzSy4Y7FWqwEIbvftmRpx5', NULL, NULL, 'Archery,Badminton,Basketball,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(50, 'rushikesh', 'mulmule', 'mulmulenume@gmail.com', '2023-05-01', 0, 'm', 25486, 0, '2023-10-06 02:05:11', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'j5bctuX4IxmavgphDOuqVAgwkcmQoedC8fymEIjQUNdKrDDkiB', NULL, NULL, 'Archery,Badminton,Basketball,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(51, 'rushikesh', 'mulmule', 'mulmulemenu@gmail.com', '2023-05-01', 0, 'm', 67682, 0, '2023-10-06 02:06:09', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'eEzMOqr22h8Lnc3JlawFxbghXRTeVreOEkunX1DcuIhJCMOgbN', NULL, NULL, 'Archery,Badminton,Basketball,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(52, 'rushikesh', 'mulmule', 'mulmulemenut@gmail.com', '2023-05-01', 0, 'm', 96772, 0, '2023-10-06 02:15:52', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'UbIE1ob5ExlBPbJr4CkCGRO5Bb9P2VHNeR9HqMA7X7DUCU5aqM', NULL, NULL, 'Archery,Badminton,Basketball,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(53, 'rushi', 'mulmule', 'mulmulerus2@gmail.com', '2023-06-01', 0, 'm', 29891, 0, '2023-10-06 02:23:15', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'cCms0fAcT1eBl8IC9qTlmfbuLplwDQRdVgm54R8tuLmBvim2DO', NULL, NULL, 'Aquatics,Athletics,Badminton,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(54, 'rushi', 'mulmule', 'mulmulerus2k@gmail.com', '2023-06-01', 0, 'm', 74511, 0, '2023-10-06 02:24:16', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'Za2r6gGaJOzeP7DAvgOL846baUYSdDK63vartht5KphkBAdxx8', NULL, NULL, 'Aquatics,Athletics,Badminton,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(55, 'rushi', 'mulmule', 'mulmulewu@gmail.com', '2023-07-01', 0, 'm', 15053, 0, '2023-10-06 02:26:58', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, '5VkYZ1hKJYCV0gIjyGFavYI5CYisFTOb4IGBtzMaZk7qcwuBfL', NULL, NULL, 'Aquatics,Athletics,Badminton,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(56, 'rushi', 'my name', 'name@gmail.com', '2023-06-01', 0, 'm', 882, 0, '2023-10-06 02:33:39', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'w2qMaNQATmFP96lxcqPczJXeepCmpa7sGiEhhtqBotag1z5XJY', NULL, NULL, 'Archery,Badminton,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(57, 'rushi', 'my name', 'nameok@gmail.com', '2023-06-01', 0, 'm', 74575, 0, '2023-10-06 02:35:44', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, '9vkwFtgMTbakknzmXDM0Rk9wLFqE4aVp2GotDBtUhxG9pnhfbH', NULL, NULL, 'Archery,Badminton,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(58, 'test', 'name', 'test@gmail.com', '2023-06-01', 0, 'm', 61567, 0, '2023-10-06 02:36:41', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'FCcuLwN0Besjn24HGJlAxEQTaulgtlVf4f6NjfG8G6plnXpi91', NULL, NULL, 'Archery,Badminton,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(59, 'nam', 'jonny', 'jonny@gmail.com', '2023-06-01', 0, 'm', 27661, 0, '2023-10-06 02:40:15', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, '8t1b4qWCHa8mhp7zwBVp12rKM3BkvheeTGjj9NbDrHDhnwwz0z', NULL, NULL, 'Athletics,Archery,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(60, 'test', 'name', 'mul@gmail.com', '2023-06-01', 0, 'm', 51856, 0, '2023-10-06 02:45:33', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'ryPY1T6MIvjKOO8bivFou8ShEssmk51vyNorAUqw2GN9zqGJx4', NULL, NULL, 'Aquatics,Athletics,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(61, 'test', 'test', 'test11@gmail.com', '2023-10-07', -1, 'm', 26660, 0, '2023-10-07 03:03:35', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'zQydP8BuUAq2dTnbHmRCI3jiy5VzpBc7imIHXWit74F779nseT', NULL, NULL, 'Aquatics,Athletics,Baseball,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(62, 'rushi', 'rushi', 'rushi@gmail.com', '2023-10-07', 0, 'm', 28652, 0, '2023-10-07 12:01:56', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'LcwlEWwG5tJzb25rgejC2hpLo3Rq7UOhVkpjz8wO2o8h2vsnRK', NULL, NULL, 'Aquatics,Athletics,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(63, 'rushi', 'rushi', 'rushi1@gmail.com', '2023-10-07', 0, 'm', 83899, 0, '2023-10-07 12:02:43', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'WcsYuFaQ8zLeGsWD3CNi0c7UJRXNBHCwX9hOb8AWkHaKHf7OgW', NULL, NULL, 'Aquatics,Athletics,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(64, 'rushi', 'mulmule', 'mulmulew@gmail.com', '2023-10-07', 0, 'm', 61171, 0, '2023-10-07 23:47:40', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, '398SQjbz3MGei0w1vljDBO0ftCoq4Fj5owOtGDX8HZ0gY048ds', NULL, NULL, 'Aquatics,Athletics,Baseball,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(65, 'rus', 'rus', 'ruses@gmail.com', '2023-10-08', -1, 'm', 85557, 1, '2023-10-08 00:30:52', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'qMKt1qoB7akRdzzb7lc4CKxxc2Rdy9WgjOyGc70y94YGzJqDMk', NULL, NULL, 'Aquatics,Athletics,Badminton,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(66, 'rushikesh', 'rushikesh', 'rushikesh@gmail.com', '2023-05-01', 0, 'm', 46673, 0, '2023-10-08 16:31:50', 0, 'f4f2d3dc329bba7ad57bb4ab55c6041c', 1, 0, NULL, 101, 22, 1679, '::1', NULL, 'CELo3TkLpz4yU9TH847RxfsINNvb2IXX8OBvsBsE7wUwQsGlMx', NULL, NULL, 'Aquatics,Athletics,', NULL, 0, NULL, 0, 0, 0, 0, NULL),
+(67, 'rus', 'rushi', 'rushi898@gmail.com', '2023-07-08', 0, 'm', 66244, 1, '2023-10-08 18:47:56', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, NULL, 101, 22, 1679, '::1', NULL, '2piBGOMaUAUjCr24xcw0TZjoaEHh0UG3TeogT8vTCqDVytxVH2', NULL, NULL, 'Archery,Badminton,', NULL, 0, NULL, 0, 0, 0, 0, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `players_challenges`
+--
+
+CREATE TABLE `players_challenges` (
+  `id` int(11) NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `opponent_id` int(11) NOT NULL,
+  `sport_id` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `location` int(11) NOT NULL COMMENT '0 - Playground, \r\n1 - Turf,\r\n2 - Arena,\r\n3 - Other',
+  `match_contest` enum('0','1') NOT NULL DEFAULT '0' COMMENT '0 - Friendly match, 1 - Losers pay match',
+  `amount` decimal(10,2) NOT NULL COMMENT '	if losers pay selected then amount is mandatory	',
+  `accept_status` int(11) NOT NULL,
+  `added_date` datetime NOT NULL,
+  `player_result` varchar(50) DEFAULT NULL,
+  `opponent_result` varchar(50) DEFAULT NULL,
+  `won` int(11) NOT NULL,
+  `draw` tinyint(1) NOT NULL DEFAULT 0,
+  `result_date` datetime DEFAULT NULL,
+  `notification` tinyint(1) NOT NULL DEFAULT 0,
+  `block` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `players_challenges`
+--
+
+INSERT INTO `players_challenges` (`id`, `player_id`, `opponent_id`, `sport_id`, `message`, `location`, `match_contest`, `amount`, `accept_status`, `added_date`, `player_result`, `opponent_result`, `won`, `draw`, `result_date`, `notification`, `block`) VALUES
+(4, 12, 39, 5, 'let\'s play today', 0, '0', '0.00', 1, '2023-06-26 00:49:35', '12', '0', 0, 0, NULL, 0, 0),
+(5, 12, 26, 8, 'let\'s play today', 0, '0', '0.00', 3, '2023-12-03 00:34:56', 'draw', 'draw', 0, 1, '2023-12-28 23:34:58', 1, 0),
+(6, 12, 39, 8, 'let\'s play today', 0, '0', '0.00', 0, '2023-12-03 00:38:01', NULL, NULL, 0, 0, NULL, 1, 0),
+(7, 12, 46, 8, 'hi', 0, '0', '0.00', 0, '2023-12-03 01:09:30', NULL, NULL, 0, 0, NULL, 0, 0),
+(8, 39, 12, 8, 'let\'s play today rushikesh mulmule', 0, '0', '0.00', 1, '2023-12-03 01:18:28', NULL, NULL, 0, 0, NULL, 1, 0),
+(9, 39, 12, 8, 'hi', 0, '0', '0.00', 1, '2023-12-02 21:16:02', '', NULL, 0, 0, NULL, 1, 0),
+(10, 39, 12, 8, '', 0, '0', '0.00', 1, '2023-12-02 21:16:02', NULL, NULL, 0, 0, NULL, 1, 0),
+(11, 39, 12, 8, '', 0, '0', '0.00', 1, '2023-12-02 21:17:15', NULL, NULL, 0, 0, NULL, 1, 0),
+(12, 39, 12, 8, '', 0, '0', '0.00', 0, '2023-12-02 21:17:15', NULL, NULL, 0, 0, NULL, 1, 0),
+(13, 39, 12, 8, '', 0, '0', '0.00', 2, '2023-12-02 21:17:15', NULL, NULL, 0, 0, NULL, 1, 0),
+(14, 39, 12, 8, '', 0, '0', '0.00', 0, '2023-12-02 21:17:15', NULL, NULL, 0, 0, NULL, 1, 0),
+(15, 39, 12, 8, '', 0, '0', '0.00', 0, '2023-12-02 21:17:15', NULL, NULL, 0, 0, NULL, 1, 0),
+(16, 39, 12, 8, '', 0, '0', '0.00', 0, '2023-12-02 21:17:15', NULL, NULL, 0, 0, NULL, 1, 0),
+(17, 39, 12, 8, '', 0, '0', '0.00', 0, '2023-12-02 21:17:15', NULL, NULL, 0, 0, NULL, 1, 0),
+(18, 39, 12, 8, '', 0, '0', '0.00', 0, '2023-12-02 21:17:15', NULL, NULL, 0, 0, NULL, 1, 0),
+(19, 39, 12, 8, '', 0, '0', '0.00', 0, '2023-12-02 21:17:15', NULL, NULL, 0, 0, NULL, 1, 0),
+(20, 39, 12, 8, '', 0, '0', '0.00', 0, '2023-12-02 21:17:15', NULL, NULL, 0, 0, NULL, 1, 0),
+(21, 39, 12, 8, 'let\'s play today', 0, '0', '0.00', 0, '2023-12-06 01:05:30', NULL, NULL, 0, 0, NULL, 1, 0),
+(22, 12, 39, 8, 'let\'s play today', 0, '0', '0.00', 0, '2023-12-06 01:05:38', NULL, NULL, 0, 0, NULL, 1, 0),
+(23, 26, 12, 8, 'let\'s play today', 0, '0', '0.00', 1, '2023-12-28 23:52:04', NULL, '12', 0, 0, NULL, 1, 0),
+(27, 12, 12, 5, 'let\'s play today', 0, '1', '0.00', 0, '2024-02-26 23:49:34', NULL, NULL, 0, 0, NULL, 0, 0),
+(28, 12, 23, 5, 'let\'s play today', 0, '1', '0.00', 0, '2024-03-10 15:54:45', NULL, NULL, 0, 0, NULL, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `players_msg`
+--
+
+CREATE TABLE `players_msg` (
+  `id` int(11) NOT NULL,
+  `challenges_id` int(11) NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `opponent_id` int(11) NOT NULL,
+  `msg` mediumtext DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `notification` tinyint(1) NOT NULL DEFAULT 0,
+  `seen` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `players_msg`
+--
+
+INSERT INTO `players_msg` (`id`, `challenges_id`, `player_id`, `opponent_id`, `msg`, `date`, `notification`, `seen`) VALUES
+(2, 2, 39, 12, 'let\'s play today', '2023-05-24 06:56:10', 1, 1),
+(3, 2, 12, 39, 'Hey! Let play, give me the details', '2023-06-11 23:30:29', 1, 0),
+(4, 2, 39, 12, 'basket ball ground', '2023-06-12 00:27:15', 1, 1),
+(5, 2, 12, 39, 'meet me today', '2023-06-20 15:15:38', 1, 0),
+(6, 2, 12, 39, 'meet me today', '2023-06-20 15:17:32', 1, 0),
+(7, 3, 39, 12, 'let\'s play today', '2023-06-25 21:45:42', 1, 0),
+(8, 3, 12, 39, 'Hey! Let play, give me the details', '2023-06-25 16:18:11', 1, 0),
+(9, 4, 39, 12, 'let\'s play today', '2023-06-26 06:19:35', 1, 1),
+(10, 4, 12, 39, 'Hey! Let play, give me the details', '2023-06-26 01:01:16', 1, 1),
+(11, 8, 39, 12, 'let\'s play today rushikesh mulmule', '2023-12-03 06:48:28', 1, 1),
+(12, 8, 12, 39, 'Hey! Let play, give me the details', '2023-12-05 23:35:07', 1, 1),
+(13, 9, 39, 12, 'hi', '2023-12-03 02:46:02', 1, 0),
+(14, 9, 12, 39, 'Hey! Let play, give me the details', '2023-12-05 23:37:31', 1, 0),
+(15, 10, 39, 12, '', '2023-12-03 02:46:02', 1, 0),
+(16, 10, 12, 39, 'Hey! Let play, give me the details', '2023-12-05 23:47:10', 1, 0),
+(17, 11, 39, 12, '', '2023-12-03 02:47:15', 1, 1),
+(18, 11, 12, 39, 'Hey! Let play, give me the details', '2023-12-05 23:51:50', 1, 0),
+(19, 12, 39, 12, '', '2023-12-03 02:47:15', 1, 0),
+(20, 12, 12, 39, 'Hey! Let play, give me the details', '2023-12-05 23:52:28', 1, 0),
+(21, 13, 39, 12, '', '2023-12-03 02:47:15', 1, 1),
+(22, 13, 12, 39, 'Hey bro! Let play, give me the details', '2023-12-05 23:59:30', 1, 0),
+(23, 14, 39, 12, '', '2023-12-03 02:47:15', 1, 1),
+(24, 14, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 00:00:06', 1, 0),
+(25, 15, 39, 12, '', '2023-12-03 02:47:15', 1, 0),
+(26, 15, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 00:00:51', 1, 0),
+(27, 16, 39, 12, '', '2023-12-03 02:47:15', 1, 0),
+(28, 16, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 00:01:27', 1, 0),
+(29, 17, 12, 39, '', '2023-12-03 02:47:15', 1, 0),
+(30, 17, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 00:02:08', 1, 0),
+(31, 18, 39, 12, '', '2023-12-03 02:47:15', 1, 0),
+(32, 18, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 00:18:23', 1, 0),
+(33, 19, 39, 12, '', '2023-12-03 02:47:15', 1, 0),
+(34, 19, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 00:19:50', 1, 0),
+(35, 20, 39, 12, '', '2023-12-03 02:47:15', 1, 0),
+(36, 20, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 00:20:37', 1, 0),
+(37, 4, 39, 12, 'let\'s play today', '2023-06-26 06:19:35', 1, 1),
+(38, 4, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 01:09:53', 1, 1),
+(39, 8, 39, 12, 'let\'s play today rushikesh mulmule', '2023-12-03 06:48:28', 1, 1),
+(40, 8, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 01:29:28', 1, 1),
+(41, 9, 39, 12, 'hi', '2023-12-03 02:46:02', 1, 0),
+(42, 9, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 01:33:28', 1, 0),
+(43, 10, 39, 12, '', '2023-12-03 02:46:02', 1, 0),
+(44, 10, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 01:34:03', 1, 0),
+(45, 11, 39, 12, '', '2023-12-03 02:47:15', 1, 1),
+(46, 11, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 01:34:22', 1, 0),
+(47, 12, 39, 12, '', '2023-12-03 02:47:15', 1, 0),
+(48, 12, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 01:38:09', 1, 0),
+(49, 22, 39, 12, 'let\'s play today', '2023-12-06 06:35:38', 1, 0),
+(50, 22, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 01:38:31', 1, 0),
+(51, 13, 39, 12, '', '2023-12-03 02:47:15', 1, 1),
+(52, 13, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 01:38:47', 1, 0),
+(53, 14, 39, 12, '', '2023-12-03 02:47:15', 1, 1),
+(54, 14, 12, 39, 'Hey! Let play, give me the details', '2023-12-06 01:38:49', 1, 0),
+(55, 17, 39, 12, '', '2023-12-03 02:47:15', 1, 0),
+(56, 17, 39, 12, 'Hey Rushi! Let play, give me the details', '2023-12-07 23:56:33', 1, 0),
+(57, 18, 12, 39, '', '2023-12-03 02:47:15', 1, 0),
+(58, 18, 12, 39, 'Hey! Let play, give me the details', '2023-12-07 23:56:41', 1, 0),
+(59, 21, 39, 12, 'let\'s play today', '2023-12-06 06:35:30', 1, 0),
+(60, 21, 12, 39, 'Hey! Let play, give me the details', '2023-12-08 00:37:43', 1, 0),
+(61, 4, 39, 12, 'let\'s play today', '2023-06-26 06:19:35', 1, 1),
+(62, 4, 12, 39, 'Hey! Let play, give me the details', '2023-12-08 00:40:04', 1, 1),
+(63, 8, 39, 12, 'let\'s play today rushikesh mulmule', '2023-12-03 06:48:28', 1, 1),
+(64, 8, 12, 39, 'Hey! Let play, give me the details', '2023-12-08 00:40:09', 1, 1),
+(65, 9, 39, 12, 'hi', '2023-12-03 02:46:02', 1, 0),
+(66, 9, 12, 39, 'Hey! Let play, give me the details', '2023-12-08 00:40:14', 1, 0),
+(67, 10, 39, 12, '', '2023-12-03 02:46:02', 1, 0),
+(68, 10, 12, 39, 'Hey! Let play, give me the details', '2023-12-08 00:40:24', 1, 0),
+(69, 11, 39, 12, '', '2023-12-03 02:47:15', 1, 1),
+(70, 11, 12, 39, 'Hey! Let play, give me the details', '2023-12-08 00:40:27', 1, 0),
+(71, 4, 12, 39, 'meet me today', '2023-12-23 23:16:23', 1, 1),
+(72, 4, 12, 39, 'meet me today', '2023-12-23 23:16:28', 1, 1),
+(73, 4, 12, 39, 'meet me today', '2023-12-23 23:16:31', 1, 1),
+(74, 4, 12, 39, 'meet me today', '2023-12-23 23:26:39', 1, 1),
+(75, 4, 12, 39, 'meet me today', '2023-12-23 23:26:43', 1, 1),
+(76, 4, 12, 39, 'meet me today', '2023-12-23 23:26:45', 1, 1),
+(77, 4, 12, 39, 'meet me today', '2023-12-23 23:26:59', 1, 1),
+(78, 4, 12, 39, 'meet me today', '2023-12-23 23:27:01', 1, 1),
+(79, 4, 12, 39, 'meet me today', '2023-12-23 23:27:03', 1, 1),
+(80, 4, 12, 39, 'meet me today', '2023-12-23 23:27:06', 1, 1),
+(81, 4, 12, 39, 'meet me today', '2023-12-23 23:27:09', 1, 1),
+(82, 4, 12, 39, 'meet me today', '2023-12-23 23:27:11', 1, 1),
+(83, 4, 12, 39, 'meet me today', '2023-12-23 23:27:14', 1, 1),
+(84, 4, 12, 39, 'meet me today', '2023-12-23 23:27:16', 1, 1),
+(85, 4, 12, 39, 'meet me today', '2023-12-23 23:27:18', 1, 1),
+(86, 4, 12, 39, 'meet me today', '2023-12-23 23:27:20', 1, 1),
+(87, 4, 12, 39, 'meet me today', '2023-12-23 23:27:22', 1, 1),
+(88, 4, 12, 39, 'meet me today', '2023-12-23 23:27:24', 1, 1),
+(89, 4, 12, 39, 'meet me today', '2023-12-23 23:30:41', 1, 1),
+(90, 4, 39, 12, 'ok', '2023-12-26 16:08:46', 1, 1),
+(91, 4, 12, 39, 'hi', '2023-12-26 16:11:22', 1, 1),
+(92, 4, 39, 12, 'ok', '2023-12-26 16:11:44', 1, 1),
+(93, 4, 12, 39, 'ok', '2023-12-26 16:12:22', 1, 1),
+(94, 4, 39, 12, 'ok', '2023-12-26 16:41:46', 1, 1),
+(95, 4, 39, 12, 'where are you?', '2023-12-26 16:42:13', 1, 1),
+(96, 4, 12, 39, 'I am no location', '2023-12-26 16:47:15', 1, 1),
+(97, 4, 39, 12, 'ok', '2023-12-26 16:47:40', 1, 1),
+(98, 4, 39, 12, 'hi', '2023-12-26 16:48:42', 1, 1),
+(99, 4, 39, 12, 'ko', '2023-12-26 16:49:23', 1, 1),
+(100, 4, 39, 12, 'hi', '2023-12-26 16:50:27', 1, 1),
+(101, 4, 39, 12, 'tell me', '2023-12-26 16:53:16', 1, 1),
+(102, 4, 12, 39, 'what?', '2023-12-26 16:53:28', 1, 1),
+(103, 4, 39, 12, 'all this', '2023-12-26 16:53:38', 1, 1),
+(104, 4, 12, 39, 'so', '2023-12-26 16:53:50', 1, 1),
+(105, 4, 39, 12, 'ok then', '2023-12-26 16:54:13', 1, 1),
+(106, 4, 12, 39, 'where?', '2023-12-26 16:54:28', 1, 1),
+(107, 23, 26, 12, 'let\'s play today', '2023-12-29 05:22:04', 1, 1),
+(108, 23, 12, 26, 'Hey! Let play, give me the details', '2023-12-29 00:01:33', 1, 1),
+(109, 4, 12, 39, 'hi', '2023-12-29 16:14:54', 1, 1),
+(110, 8, 39, 12, 'let see now', '2023-12-31 04:14:54', 1, 1),
+(111, 8, 12, 39, 'what to see?', '2023-12-31 04:15:10', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `players_sports`
+--
+
+CREATE TABLE `players_sports` (
+  `id` int(11) NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `sport_id` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `players_sports`
+--
+
+INSERT INTO `players_sports` (`id`, `player_id`, `sport_id`, `status`) VALUES
+(252, 9, 8, 1),
+(253, 9, 8, 1),
+(258, 23, 8, 1),
+(259, 23, 8, 1),
+(260, 24, 8, 1),
+(261, 24, 8, 1),
+(262, 25, 8, 1),
+(263, 25, 8, 1),
+(264, 26, 8, 1),
+(265, 26, 8, 1),
+(266, 39, 8, 1),
+(267, 39, 8, 1),
+(274, 41, 8, 1),
+(275, 41, 8, 1),
+(276, 42, 8, 1),
+(277, 42, 8, 1),
+(278, 43, 8, 1),
+(279, 43, 8, 1),
+(280, 43, 8, 1),
+(281, 44, 8, 1),
+(282, 44, 8, 1),
+(283, 44, 8, 1),
+(284, 45, 8, 1),
+(285, 45, 8, 1),
+(286, 46, 8, 1),
+(287, 46, 8, 1),
+(288, 46, 8, 1),
+(289, 47, 8, 1),
+(290, 47, 8, 1),
+(291, 47, 8, 1),
+(292, 48, 8, 1),
+(293, 48, 8, 1),
+(294, 48, 8, 1),
+(295, 49, 8, 1),
+(296, 49, 8, 1),
+(297, 49, 8, 1),
+(298, 50, 8, 1),
+(299, 50, 8, 1),
+(300, 50, 8, 1),
+(301, 51, 8, 1),
+(302, 51, 8, 1),
+(303, 51, 8, 1),
+(304, 52, 8, 1),
+(305, 52, 8, 1),
+(306, 52, 8, 1),
+(307, 53, 8, 1),
+(308, 53, 8, 1),
+(309, 53, 8, 1),
+(310, 54, 8, 1),
+(311, 54, 8, 1),
+(312, 54, 8, 1),
+(313, 55, 8, 1),
+(314, 55, 8, 1),
+(315, 55, 8, 1),
+(316, 56, 8, 1),
+(317, 56, 8, 1),
+(318, 57, 8, 1),
+(319, 57, 8, 1),
+(320, 58, 8, 1),
+(321, 58, 8, 1),
+(322, 59, 8, 1),
+(323, 59, 8, 1),
+(324, 60, 8, 1),
+(325, 60, 8, 1),
+(326, 61, 8, 1),
+(327, 61, 8, 1),
+(328, 61, 8, 1),
+(329, 62, 8, 1),
+(330, 62, 8, 1),
+(331, 63, 8, 1),
+(332, 63, 8, 1),
+(333, 64, 8, 1),
+(334, 64, 8, 1),
+(335, 64, 8, 1),
+(336, 65, 8, 1),
+(337, 65, 8, 1),
+(338, 65, 8, 1),
+(339, 66, 8, 1),
+(340, 66, 8, 1),
+(341, 67, 8, 1),
+(342, 67, 8, 1),
+(553, 12, 8, 1),
+(554, 12, 5, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `play_location`
+--
+
+CREATE TABLE `play_location` (
+  `id` int(11) NOT NULL,
+  `name` varchar(55) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `play_location`
+--
+
+INSERT INTO `play_location` (`id`, `name`) VALUES
+(0, 'Playground'),
+(1, 'Turf'),
+(2, 'Arena'),
+(3, 'Other');
 
 -- --------------------------------------------------------
 
@@ -7749,7 +8218,15 @@ INSERT INTO `sports` (`id`, `name`, `status`) VALUES
 (46, 'Weightlifting', 1),
 (47, 'Wrestling', 1),
 (48, 'backgammon', 1),
-(49, 'poker', 1);
+(49, 'poker', 1),
+(50, 'pool', 1),
+(51, 'fishing', 1),
+(52, 'jet skiing', 1),
+(53, 'kitesurfing', 1),
+(54, 'ultimate frisbee', 1),
+(55, 'paragliding', 1),
+(56, 'snowmobiling', 1),
+(57, 'racquetball', 1);
 
 -- --------------------------------------------------------
 
@@ -7820,7 +8297,7 @@ CREATE TABLE `teams` (
   `teamname` varchar(55) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `age_range` int(11) NOT NULL COMMENT '1 - 8 to 12\r\n2 - 13 to 18\r\n3 - 19 to 45\r\n4- 46 to 60\r\n5 - 61 and above',
-  `type` int(11) NOT NULL,
+  `type` int(11) NOT NULL COMMENT '1 - Local Team,\r\n2 - Club Team,\r\n3 - Corporate Team,\r\n4 - Organization Or NGO Team,\r\n5 - College Team,\r\n6 - School Team,\r\n7 - Other Team',
   `gender` enum('m','f','b','o','a') NOT NULL COMMENT 'm - male\r\nf - female\r\no - other\r\na - all\r\nb - Both male and female',
   `otp` int(11) NOT NULL,
   `otp_verify` tinyint(1) NOT NULL DEFAULT 0,
@@ -7854,8 +8331,9 @@ CREATE TABLE `teams` (
 --
 
 INSERT INTO `teams` (`id`, `teamname`, `email`, `age_range`, `type`, `gender`, `otp`, `otp_verify`, `register_date`, `sport_id`, `password`, `status`, `forget_password`, `last_login`, `country_id`, `state_id`, `city_id`, `ip_address`, `jwt_token`, `token_id`, `profile_img`, `tshirt_number`, `sports_list`, `last_update`, `update_email`, `new_email`, `matches`, `won`, `draw`, `account_deactive`, `deactive_date`) VALUES
-(1, 'mumbai indians', 'mulmulerus1717@gmail.com', 1, 1, 'm', 82478, 1, '2024-03-24 17:28:48', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, '2024-03-27 00:46:38', 101, 22, 1679, '::1', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MSwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE0ODA1OTgsImV4cCI6MTcxMTQ4NDE5OH0.AfZhoYV1aDUfZJYu4nQRumCKt0zEbai_CivEwdFhafw', 'ubKu8JwFyqSAnv5UgNHgiaqP2gjQlbuFC95TgOUAeVBZb98msR', '17112960357531.jpeg', NULL, 'Biathlon,Baseball,', '2024-03-25 01:04:09', 0, 'mulmulerus1717@gmail.com', 0, 0, 0, 0, '2024-03-25 01:20:12'),
-(2, 'chennai super kings', 'superkings1717@gmail.com', 1, 1, 'm', 63233, 1, '2024-03-26 23:06:13', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, '2024-03-28 01:44:17', 101, 22, 1679, '::1', '', 'f8CT8QEbPrSD5EmFQPO5qszMwFYKAR5SeFZNpGUayVxjf5LXFd', NULL, NULL, 'Biathlon,Baseball,', NULL, 0, NULL, 0, 0, 0, 0, NULL);
+(1, 'mumbai indians', 'mulmulerus1717@gmail.com', 1, 1, 'm', 82478, 1, '2024-03-24 17:28:48', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, '2024-04-14 19:21:34', 101, 22, 1679, '::1', '', 'ubKu8JwFyqSAnv5UgNHgiaqP2gjQlbuFC95TgOUAeVBZb98msR', '17112960357531.jpeg', NULL, 'Biathlon,Baseball,', '2024-03-25 01:04:09', 0, 'mulmulerus1717@gmail.com', 0, 0, 0, 0, '2024-03-25 01:20:12'),
+(2, 'chennai super kings', 'superkings1717@gmail.com', 1, 1, 'm', 63233, 1, '2024-03-26 23:06:13', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, '2024-05-19 23:03:00', 101, 22, 1679, '::1', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTYxMzk5ODAsImV4cCI6MTcxNjE0MzU4MH0.-kiYZyK22JyqaYSny-aq9Cp-MDeMMYBTnSVw9EXUWfI', 'f8CT8QEbPrSD5EmFQPO5qszMwFYKAR5SeFZNpGUayVxjf5LXFd', NULL, NULL, 'Biathlon,Baseball,Golf,', NULL, 0, NULL, 1, 1, 0, 0, NULL),
+(3, 'rajasthan royal', 'rasjasthanroyal17@gmail.com', 3, 2, 'm', 53394, 1, '2024-04-06 23:03:58', 0, '32250170a0dca92d53ec9624f336ca24', 1, 0, '2024-04-09 01:10:30', 101, 22, 1679, '::1', '', 'tel8G0h7sSvde36Rdut8QntKQxQLNYibIx8vNA9fpfkwU7f3Rv', '1712433386115images_rajashtan_royal.png', NULL, 'Cricket,Archery,Badminton,Baseball,', NULL, 0, NULL, 0, 0, 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -7869,7 +8347,9 @@ CREATE TABLE `teams_challenges` (
   `opponent_id` int(11) NOT NULL,
   `sport_id` int(11) NOT NULL,
   `message` text NOT NULL,
+  `location` int(11) NOT NULL COMMENT '0 - Playground, 1 - Turf, 2 - Arena, 3 - Other',
   `match_contest` enum('0','1') NOT NULL DEFAULT '0' COMMENT '0 - Friendly match, 1 - Prize money match',
+  `amount` decimal(10,2) NOT NULL COMMENT 'if losers pay selected then amount is mandatory	',
   `accept_status` int(11) NOT NULL,
   `added_date` datetime NOT NULL,
   `team_result` varchar(50) DEFAULT NULL,
@@ -7885,8 +8365,12 @@ CREATE TABLE `teams_challenges` (
 -- Dumping data for table `teams_challenges`
 --
 
-INSERT INTO `teams_challenges` (`id`, `team_id`, `opponent_id`, `sport_id`, `message`, `match_contest`, `accept_status`, `added_date`, `team_result`, `opponent_result`, `won`, `draw`, `result_date`, `notification`, `block`) VALUES
-(1, 1, 2, 5, 'let\'s play today', '0', 1, '2024-03-27 00:48:38', NULL, '2', 0, 0, NULL, 1, 0);
+INSERT INTO `teams_challenges` (`id`, `team_id`, `opponent_id`, `sport_id`, `message`, `location`, `match_contest`, `amount`, `accept_status`, `added_date`, `team_result`, `opponent_result`, `won`, `draw`, `result_date`, `notification`, `block`) VALUES
+(1, 1, 2, 5, 'let\'s play today', 0, '0', '0.00', 3, '2024-03-27 00:48:38', '2', '2', 2, 0, '2024-04-14 02:37:08', 1, 0),
+(2, 3, 1, 5, 'let\'s play today', 0, '0', '0.00', 1, '2024-04-09 01:10:48', NULL, NULL, 0, 0, NULL, 1, 0),
+(3, 3, 2, 5, 'let\'s play today', 0, '1', '0.00', 1, '2024-04-09 01:10:59', NULL, NULL, 0, 0, NULL, 1, 0),
+(4, 1, 3, 5, 'let\'s play today', 0, '0', '0.00', 0, '2024-04-14 14:02:31', NULL, NULL, 0, 0, NULL, 0, 0),
+(5, 2, 1, 5, 'let\'s play today', 0, '0', '0.00', 0, '2024-04-14 17:21:15', NULL, NULL, 0, 0, NULL, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -8021,8 +8505,13 @@ INSERT INTO `teams_msg` (`id`, `challenges_id`, `team_id`, `opponent_id`, `msg`,
 (110, 8, 39, 12, 'let see now', '2023-12-31 04:14:54', 1, 1),
 (111, 8, 12, 39, 'what to see?', '2023-12-31 04:15:10', 1, 1),
 (112, 1, 1, 2, 'let\'s play today', '2024-03-27 06:18:38', 1, 1),
-(113, 1, 2, 1, 'Hey! Let play, give me the details', '2024-03-27 01:37:21', 0, 0),
-(114, 1, 2, 1, 'meet me today', '2024-03-28 00:46:36', 0, 0);
+(113, 1, 2, 1, 'Hey! Let play, give me the details', '2024-03-27 01:37:21', 1, 1),
+(114, 1, 2, 1, 'meet me today', '2024-03-28 00:46:36', 1, 1),
+(115, 2, 3, 1, 'let\'s play today', '2024-04-09 06:40:48', 1, 1),
+(116, 2, 1, 3, 'Hey! Let play, give me the details', '2024-04-14 01:20:12', 0, 0),
+(117, 1, 1, 2, 'hi', '2024-04-14 02:21:20', 1, 0),
+(118, 3, 3, 2, 'let\'s play today', '2024-04-09 06:40:59', 1, 1),
+(119, 3, 2, 3, 'Hey! Let play, give me the details', '2024-04-14 16:05:53', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -8045,16 +8534,83 @@ INSERT INTO `teams_sports` (`id`, `team_id`, `sport_id`, `status`) VALUES
 (3, 2, 8, 1),
 (4, 2, 5, 1),
 (7, 1, 8, 1),
-(8, 1, 5, 1);
+(8, 1, 5, 1),
+(21, 3, 12, 1),
+(22, 3, 2, 1),
+(23, 3, 4, 1),
+(24, 3, 5, 1),
+(25, 2, 19, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `team_players`
+--
+
+CREATE TABLE `team_players` (
+  `id` int(11) NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `sport_id` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `added_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `remove` tinyint(1) NOT NULL DEFAULT 0,
+  `remove_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `team_players`
+--
+
+INSERT INTO `team_players` (`id`, `team_id`, `player_id`, `sport_id`, `message`, `added_date`, `status`, `remove`, `remove_date`) VALUES
+(1, 2, 12, 5, 'hello', '2024-05-19 15:47:23', 0, 0, '2024-05-19 15:47:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `team_type`
+--
+
+CREATE TABLE `team_type` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `team_type`
+--
+
+INSERT INTO `team_type` (`id`, `name`, `date`) VALUES
+(1, 'Local Team', '2024-04-07 12:01:54'),
+(2, 'Club Team', '2024-04-07 12:01:54'),
+(3, 'Corporate Team', '2024-04-07 12:03:14'),
+(4, 'Organization Or NGO Team', '2024-04-07 12:03:14'),
+(5, 'College Team', '2024-04-07 12:04:02'),
+(6, 'School Team', '2024-04-07 12:04:02'),
+(7, 'Other Team', '2024-04-07 12:04:33');
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `age_range`
+--
+ALTER TABLE `age_range`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `block`
 --
 ALTER TABLE `block`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `block_team`
+--
+ALTER TABLE `block_team`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -8073,6 +8629,37 @@ ALTER TABLE `countries`
 -- Indexes for table `notifications`
 --
 ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notifications_team`
+--
+ALTER TABLE `notifications_team`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `players`
+--
+ALTER TABLE `players`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `token_id` (`token_id`);
+
+--
+-- Indexes for table `players_challenges`
+--
+ALTER TABLE `players_challenges`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `players_msg`
+--
+ALTER TABLE `players_msg`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `players_sports`
+--
+ALTER TABLE `players_sports`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -8113,14 +8700,38 @@ ALTER TABLE `teams_sports`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `team_players`
+--
+ALTER TABLE `team_players`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `team_type`
+--
+ALTER TABLE `team_type`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `age_range`
+--
+ALTER TABLE `age_range`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `block`
 --
 ALTER TABLE `block`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT for table `block_team`
+--
+ALTER TABLE `block_team`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `cities`
@@ -8138,13 +8749,43 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `notifications_team`
+--
+ALTER TABLE `notifications_team`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `players`
+--
+ALTER TABLE `players`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+
+--
+-- AUTO_INCREMENT for table `players_challenges`
+--
+ALTER TABLE `players_challenges`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT for table `players_msg`
+--
+ALTER TABLE `players_msg`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+
+--
+-- AUTO_INCREMENT for table `players_sports`
+--
+ALTER TABLE `players_sports`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=555;
 
 --
 -- AUTO_INCREMENT for table `sports`
 --
 ALTER TABLE `sports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `states`
@@ -8156,25 +8797,37 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT for table `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `teams_challenges`
 --
 ALTER TABLE `teams_challenges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `teams_msg`
 --
 ALTER TABLE `teams_msg`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 --
 -- AUTO_INCREMENT for table `teams_sports`
 --
 ALTER TABLE `teams_sports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `team_players`
+--
+ALTER TABLE `team_players`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `team_type`
+--
+ALTER TABLE `team_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

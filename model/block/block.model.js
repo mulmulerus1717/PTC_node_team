@@ -68,7 +68,7 @@ exports.block_add = async function (req, res){
                     const [results, opponentResult] = await sequelize.query("SELECT p.id FROM teams p WHERE p.token_id = ? AND p.id != ?",{replacements:[opponent_token_id,team_id]});
                     if(opponentResult!=""){
                         var opponent_id = opponentResult[0].id;
-                        await sequelize.query("INSERT INTO block (team_id,opponent_id,date) VALUES (?,?,?)",{replacements:[team_id,opponent_id,currenttime]});
+                        await sequelize.query("INSERT INTO block_team (team_id,opponent_id,date) VALUES (?,?,?)",{replacements:[team_id,opponent_id,currenttime]});
                         const [results, challengeResult] = await sequelize.query("SELECT 1 FROM teams_challenges pc WHERE (pc.team_id = ? AND pc.opponent_id = ?) OR (pc.team_id = ? AND pc.opponent_id = ?) AND pc.block = 0",{replacements:[team_id,opponent_id,opponent_id,team_id]});
                         if(challengeResult!=""){
                             await sequelize.query("UPDATE teams_challenges pc SET pc.block = 1 WHERE (pc.team_id = ? AND pc.opponent_id = ?) OR (pc.team_id = ? AND pc.opponent_id = ?)",{replacements:[team_id,opponent_id,opponent_id,team_id]});
@@ -107,7 +107,7 @@ exports.unblock = async function (req, res){
                 const [results, blockResult] = await sequelize.query("SELECT p.id FROM `block` b INNER JOIN teams p on p.id = b.opponent_id WHERE b.`team_id` = ? AND p.token_id = ?",{replacements:[team_id,opponent_token_id]});
                 if(blockResult!=""){
                     var opponent_id = blockResult[0].id;
-                    await sequelize.query("DELETE FROM block WHERE team_id = ? AND opponent_id = ?",{replacements:[team_id,opponent_id]});
+                    await sequelize.query("DELETE FROM block_team WHERE team_id = ? AND opponent_id = ?",{replacements:[team_id,opponent_id]});
                     const [results, challengeResult] = await sequelize.query("SELECT 1 FROM teams_challenges pc WHERE (pc.team_id = ? AND pc.opponent_id = ?) OR (pc.team_id = ? AND pc.opponent_id = ?) AND pc.block = 1",{replacements:[team_id,opponent_id,opponent_id,team_id]});
                         if(challengeResult!=""){
                             await sequelize.query("UPDATE teams_challenges pc SET pc.block = 0 WHERE (pc.team_id = ? AND pc.opponent_id = ?) OR (pc.team_id = ? AND pc.opponent_id = ?)",{replacements:[team_id,opponent_id,opponent_id,team_id]});

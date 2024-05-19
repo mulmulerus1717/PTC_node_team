@@ -140,7 +140,7 @@ exports.result_add = async function (req, res){
                     /* Start add notification */
                     var description = fullname + " added match result for " + challengeSportsName +".";
                     var link = "/result";
-                    await sequelize.query("INSERT INTO notifications (team_id,opponent_id,description,link,date) VALUES (?,?,?,?,?)",{replacements:[notificationteamId,team_id,description,link,currenttime]});
+                    await sequelize.query("INSERT INTO notifications_team (team_id,opponent_id,description,link,date) VALUES (?,?,?,?,?)",{replacements:[notificationteamId,team_id,description,link,currenttime]});
                     /* End add notification */
 
                     const [resultsteam, teamsByResultAdd] = await sequelize.query("SELECT team_result, opponent_result, won, draw FROM `teams_challenges` WHERE id = ?",{replacements:[challenge_id]});
@@ -163,7 +163,7 @@ exports.result_add = async function (req, res){
                                 /* Start add notification */
                                 var description = challengeteamName + " and you finalizes match result for " + challengeSportsName +".";
                                 var link = "/result";
-                                await sequelize.query("INSERT INTO notifications (team_id,opponent_id,description,link,date) VALUES (?,?,?,?,?)",{replacements:[notificationteamId,team_id,description,link,currenttime]});
+                                await sequelize.query("INSERT INTO notifications_team (team_id,opponent_id,description,link,date) VALUES (?,?,?,?,?)",{replacements:[notificationteamId,team_id,description,link,currenttime]});
                                 /* End add notification */
 
                             }

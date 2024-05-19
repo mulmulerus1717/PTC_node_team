@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 //var mysql = require('mysql');
 
-const sequelize = new Sequelize('wiyt_team_dev', 'root', '', {
+const sequelize = new Sequelize('wiyt_dev2', 'root', '', {
     host: 'localhost',
     dialect: 'mysql',
     logging: false,  

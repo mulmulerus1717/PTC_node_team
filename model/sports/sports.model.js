@@ -1,5 +1,6 @@
 const sequelize = require.main.require('../db/db.js');
 const datatype = require.main.require('../routes/datatype.js');
+const http = require('http');
 
 exports.sports_list = async function (req, res){
     res.setHeader('Content-Type','application/json'); 
@@ -22,7 +23,7 @@ exports.sports_add = async function (req, res){
         	res.status(200).json({status:false, message:"Sport/Game already exists"});
         }else{
         	await sequelize.query("INSERT INTO sports (name) VALUES (?)",{ replacements:[sport]});
-        	res.status(200).json({status:true, message:"Sport/Game added successfully"});
+            res.status(200).json({status:true, message:"Sport/Game added successfully"});
         }
         
     } catch(e) {

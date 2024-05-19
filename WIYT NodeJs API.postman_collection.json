@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "01f90d7d-eeff-4788-9377-571260ee5d0e",
-		"name": "WIYT NodeJs API",
+		"_postman_id": "d82ff24d-6cc3-49c6-ae55-940d9d136154",
+		"name": "Play To Conquer Team NodeJs API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "11142919"
 	},
@@ -15,14 +15,46 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/sports",
+							"raw": "https://teamapi.playtoconquer.com:8881/sports",
+							"protocol": "https",
+							"host": [
+								"teamapi",
+								"playtoconquer",
+								"com"
+							],
+							"port": "8881",
+							"path": [
+								"sports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Sports",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "sport",
+									"value": "Backgammon",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/sports/add_sports",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"sports"
+								"sports",
+								"add_sports"
 							]
 						}
 					},
@@ -42,13 +74,8 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "firstname",
+									"key": "teamname",
 									"value": "Meheresh",
-									"type": "text"
-								},
-								{
-									"key": "lastname",
-									"value": "Mulmule",
 									"type": "text"
 								},
 								{
@@ -86,19 +113,29 @@
 									"type": "text"
 								},
 								{
-									"key": "dob",
-									"value": "1995-12-20",
+									"key": "type",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "age_range",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "m",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/signup",
+							"raw": "http://localhost:8000/signup",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"signup"
 							]
@@ -112,12 +149,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/signup/otp_verification?email=mulmulerus1717@gmail.com&otp=65661",
+							"raw": "http://localhost:8000/signup/otp_verification?email=arjun1771@gmail.com&otp=67354",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"signup",
 								"otp_verification"
@@ -125,11 +162,11 @@
 							"query": [
 								{
 									"key": "email",
-									"value": "mulmulerus1717@gmail.com"
+									"value": "arjun1771@gmail.com"
 								},
 								{
 									"key": "otp",
-									"value": "65661"
+									"value": "67354"
 								}
 							]
 						}
@@ -142,12 +179,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/signup/otp_resend?email=mulmulerus1717@gmail.com",
+							"raw": "http://localhost:8000/signup/otp_resend?email=arjun1771@gmail.com",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"signup",
 								"otp_resend"
@@ -155,7 +192,7 @@
 							"query": [
 								{
 									"key": "email",
-									"value": "mulmulerus1717@gmail.com"
+									"value": "arjun1771@gmail.com"
 								}
 							]
 						}
@@ -168,12 +205,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/signup/otp_resend_email_verify?email=mulmulerus1717@gmail.com",
+							"raw": "http://localhost:8000/signup/otp_resend_email_verify?email=arjun1771@gmail.com",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"signup",
 								"otp_resend_email_verify"
@@ -181,7 +218,7 @@
 							"query": [
 								{
 									"key": "email",
-									"value": "mulmulerus1717@gmail.com"
+									"value": "arjun1771@gmail.com"
 								}
 							]
 						}
@@ -203,23 +240,23 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "mulmulerus1717@gmail.com",
+									"value": "arjun1771@gmail.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "pass123",
+									"value": "123456",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/login/",
+							"raw": "http://localhost:8000/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"login",
 								""
@@ -241,18 +278,18 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "mulmulerus1717@gmail.com",
+									"value": "arjun1771@gmail.com",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/login/forget_password",
+							"raw": "http://localhost:8000/login/forget_password",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"login",
 								"forget_password"
@@ -271,28 +308,28 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "mulmulerus1717@gmail.com",
+									"value": "arjun1771@gmail.com",
 									"type": "text"
 								},
 								{
 									"key": "otp",
-									"value": "01515",
+									"value": "84833",
 									"type": "text"
 								},
 								{
 									"key": "new_password",
-									"value": "pass123",
+									"value": "123456",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/login/change_password",
+							"raw": "http://localhost:8000/login/change_password",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"login",
 								"change_password"
@@ -319,12 +356,12 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://localhost:3000/location/?name=cities&id=22",
+							"raw": "http://localhost:8000/location/?name=cities&id=22",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"location",
 								""
@@ -357,7 +394,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDM4NDAxNjUsImV4cCI6MTcwMzg0Mzc2NX0.Zn_12FsK2QPoMwGMwQlGOU-rkb_H2eXQkbhesgdIx7M",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYXJqdW4xNzcxQGdtYWlsLmNvbSIsInRlYW1faWQiOjEsInBhc3N3b3JkIjoiZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2UifSwiaWF0IjoxNzExMzA2NzYxLCJleHAiOjE3MTEzMTAzNjF9.oIWInEEu9450ElehNcCuGOwdEMplvCLwPWKNs8wL3Ug",
 									"type": "string"
 								}
 							]
@@ -366,21 +403,15 @@
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "token_id",
-									"value": "ku0956d6dfkk673d3d7390g37d7f99g4gip6087ydtxgmmgiik",
-									"type": "text"
-								}
-							]
+							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://localhost:3000/profile/view_profile",
+							"raw": "http://localhost:8000/profile/view_profile",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"profile",
 								"view_profile"
@@ -397,7 +428,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2OTk3MjQ4NjEsImV4cCI6MTY5OTcyODQ2MX0.B3XKDVOawMhzikGR6VTVETibGFVVPPFbwWlRDgxeqmQ",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYXJqdW4xNzcxQGdtYWlsLmNvbSIsInRlYW1faWQiOjEsInBhc3N3b3JkIjoiZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2UifSwiaWF0IjoxNzExMjk0NTIyLCJleHAiOjE3MTEyOTgxMjJ9.oILjE135kkn42YxKaPfzIU8wneBMmXnLX7N1gl8gfDs",
 									"type": "string"
 								}
 							]
@@ -410,17 +441,17 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/Rushi/Downloads/mt sinai.jpg"
+									"src": "/C:/Users/Rushi/Downloads/1.jpeg"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/profile",
+							"raw": "http://localhost:8000/profile",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"profile"
 							]
@@ -436,7 +467,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2OTk3MjQ4NjEsImV4cCI6MTY5OTcyODQ2MX0.B3XKDVOawMhzikGR6VTVETibGFVVPPFbwWlRDgxeqmQ",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYXJqdW4xNzcxQGdtYWlsLmNvbSIsInRlYW1faWQiOjEsInBhc3N3b3JkIjoiZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2UifSwiaWF0IjoxNzExMjk0NTIyLCJleHAiOjE3MTEyOTgxMjJ9.oILjE135kkn42YxKaPfzIU8wneBMmXnLX7N1gl8gfDs",
 									"type": "string"
 								}
 							]
@@ -447,13 +478,8 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "firstname",
-									"value": "meheresh",
-									"type": "text"
-								},
-								{
-									"key": "lastname",
-									"value": "Mulmule",
+									"key": "teamname",
+									"value": "Mumbai Indians",
 									"type": "text"
 								},
 								{
@@ -482,29 +508,29 @@
 									"type": "text"
 								},
 								{
-									"key": "dob",
-									"value": "1995-12-20",
-									"type": "text"
-								},
-								{
-									"key": "tshirt_number",
-									"value": "17",
-									"type": "text"
-								},
-								{
 									"key": "gender",
 									"value": "m",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "age_range",
+									"value": "1",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/profile/edit_profile",
+							"raw": "http://localhost:8000/profile/edit_profile",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"profile",
 								"edit_profile"
@@ -521,7 +547,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjo5LCJwYXNzd29yZCI6IjMyMjUwMTcwYTBkY2E5MmQ1M2VjOTYyNGYzMzZjYTI0In0sImlhdCI6MTY4MDk3NTY4NywiZXhwIjoxNjgwOTc5Mjg3fQ.l5LmpuM-Bje0Xy7Bga4H4xBrzM0UAWvpiy2pRwuoIug",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYXJqdW4xNzcxQGdtYWlsLmNvbSIsInRlYW1faWQiOjEsInBhc3N3b3JkIjoiZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2UifSwiaWF0IjoxNzExMzA2NzYxLCJleHAiOjE3MTEzMTAzNjF9.oIWInEEu9450ElehNcCuGOwdEMplvCLwPWKNs8wL3Ug",
 									"type": "string"
 								}
 							]
@@ -533,18 +559,19 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "mulmulerus1718@gmail.com",
+									"value": "mulmulerus1717@gmail.com",
+									"description": "Add new email id",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/profile/edit_profile_email",
+							"raw": "http://localhost:8000/profile/edit_profile_email",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"profile",
 								"edit_profile_email"
@@ -561,7 +588,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MThAZ21haWwuY29tIiwicGxheWVyX2lkIjo5LCJwYXNzd29yZCI6IjMyMjUwMTcwYTBkY2E5MmQ1M2VjOTYyNGYzMzZjYTI0In0sImlhdCI6MTY4MTAzODg0MSwiZXhwIjoxNjgxMDQyNDQxfQ.BC6-eEFvicRb8-swwVCQexcI4cjx8lRS5Qu9t6f9888",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYXJqdW4xNzcxQGdtYWlsLmNvbSIsInRlYW1faWQiOjEsInBhc3N3b3JkIjoiZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2UifSwiaWF0IjoxNzExMzA2NzYxLCJleHAiOjE3MTEzMTAzNjF9.oIWInEEu9450ElehNcCuGOwdEMplvCLwPWKNs8wL3Ug",
 									"type": "string"
 								}
 							]
@@ -578,18 +605,18 @@
 								},
 								{
 									"key": "otp",
-									"value": "44619",
+									"value": "82478",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/profile/verify_profile_email",
+							"raw": "http://localhost:8000/profile/verify_profile_email",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"profile",
 								"verify_profile_email"
@@ -606,7 +633,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MThAZ21haWwuY29tIiwicGxheWVyX2lkIjo5LCJwYXNzd29yZCI6IjMyMjUwMTcwYTBkY2E5MmQ1M2VjOTYyNGYzMzZjYTI0In0sImlhdCI6MTY4MTAzODg0MSwiZXhwIjoxNjgxMDQyNDQxfQ.BC6-eEFvicRb8-swwVCQexcI4cjx8lRS5Qu9t6f9888",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYXJqdW4xNzcxQGdtYWlsLmNvbSIsInRlYW1faWQiOjEsInBhc3N3b3JkIjoiZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2UifSwiaWF0IjoxNzExMzA2NzYxLCJleHAiOjE3MTEzMTAzNjF9.oIWInEEu9450ElehNcCuGOwdEMplvCLwPWKNs8wL3Ug",
 									"type": "string"
 								}
 							]
@@ -618,7 +645,7 @@
 							"urlencoded": [
 								{
 									"key": "old_password",
-									"value": "pass12345",
+									"value": "123456",
 									"type": "text"
 								},
 								{
@@ -634,12 +661,12 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/profile/change_profile_password",
+							"raw": "http://localhost:8000/profile/change_profile_password",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"profile",
 								"change_profile_password"
@@ -659,7 +686,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2OTg1MTY0MTEsImV4cCI6MTY5ODUyMDAxMX0.FSuq97qwlWABrMwPfuII_a7T5swCSDrdrryWUg-E3nA",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYXJqdW4xNzcxQGdtYWlsLmNvbSIsInRlYW1faWQiOjEsInBhc3N3b3JkIjoiZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2UifSwiaWF0IjoxNzExMzA2NzYxLCJleHAiOjE3MTEzMTAzNjF9.oIWInEEu9450ElehNcCuGOwdEMplvCLwPWKNs8wL3Ug",
 									"type": "string"
 								}
 							]
@@ -668,25 +695,58 @@
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "token_id",
-									"value": "ku095od6dfkk673d3d739uk37d7f99g4gg76087ydtxgmmgiik",
-									"type": "text",
-									"disabled": true
-								}
-							]
+							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://localhost:3000/profile/view_profile_sports",
+							"raw": "http://localhost:8000/profile/view_profile_sports",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"profile",
 								"view_profile_sports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Account Settings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYXJqdW4xNzcxQGdtYWlsLmNvbSIsInRlYW1faWQiOjEsInBhc3N3b3JkIjoiZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2UifSwiaWF0IjoxNzExMzA2NzYxLCJleHAiOjE3MTEzMTAzNjF9.oIWInEEu9450ElehNcCuGOwdEMplvCLwPWKNs8wL3Ug",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "account_setting",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/profile/change_profile_account_setting",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"profile",
+								"change_profile_account_setting"
 							]
 						}
 					},
@@ -698,14 +758,14 @@
 			"name": "Search",
 			"item": [
 				{
-					"name": "Search Players",
+					"name": "Search Teams",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDA5NDY1NDMsImV4cCI6MTcwMDk1MDE0M30.d1idYlCAGQoNVEG1hYJZN6eIY4DNGKBTzTVHvm98b9E",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MSwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE0Nzc5NzEsImV4cCI6MTcxMTQ4MTU3MX0.7tDO1DwmJeJcdMEfhTRXgfHlppek0GKnN4FQ3OvXSfs",
 									"type": "string"
 								}
 							]
@@ -727,7 +787,7 @@
 								},
 								{
 									"key": "search",
-									"value": "meh",
+									"value": "chennai super kings",
 									"type": "text"
 								},
 								{
@@ -736,24 +796,29 @@
 									"type": "text"
 								},
 								{
-									"key": "age",
-									"value": "12-50",
+									"key": "age_range",
+									"value": "1",
 									"type": "text"
 								},
 								{
 									"key": "sports",
 									"value": "8,5",
 									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "1",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/search/",
+							"raw": "http://localhost:8000/search/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"search",
 								""
@@ -770,7 +835,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2ODQ4NzExMjAsImV4cCI6MTY4NDg3NDcyMH0.wcUcY695NSsqxJcerZ8t8jTeUUryI5fO_el2H0ppzCE",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MSwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE0ODA1OTgsImV4cCI6MTcxMTQ4NDE5OH0.AfZhoYV1aDUfZJYu4nQRumCKt0zEbai_CivEwdFhafw",
 									"type": "string"
 								}
 							]
@@ -782,28 +847,34 @@
 							"urlencoded": [
 								{
 									"key": "opponent_token",
-									"value": "ku095od6dfkk673d3d739uk37d7f99g4gg76087ydtxgmmgiik",
+									"value": "f8CT8QEbPrSD5EmFQPO5qszMwFYKAR5SeFZNpGUayVxjf5LXFd",
 									"type": "text"
 								},
 								{
 									"key": "sport_id",
-									"value": "8",
+									"value": "5",
 									"type": "text"
 								},
 								{
 									"key": "message",
 									"value": "let's play today",
 									"type": "text"
+								},
+								{
+									"key": "match",
+									"value": "0",
+									"description": "0 - friendly match, 1 - prize money match",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/search/send_challenge",
+							"raw": "http://localhost:8000/search/send_challenge",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"search",
 								"send_challenge"
@@ -820,7 +891,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDE1NTMwMjcsImV4cCI6MTcwMTU1NjYyN30.AJmTAFPjWn1711phNqV64J9DRiMahEcgFm7r3KW9kCM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE0ODIzOTAsImV4cCI6MTcxMTQ4NTk5MH0.YBvl3pyTqtKdxolSnYqjizWkj8tG9tCq98MNEw5tQd8",
 									"type": "string"
 								}
 							]
@@ -843,12 +914,12 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/search/receive_challenge",
+							"raw": "http://localhost:8000/search/receive_challenge",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"search",
 								"receive_challenge"
@@ -865,7 +936,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2ODUyNjg5NTcsImV4cCI6MTY4NTI3MjU1N30.eY5NRkHFkikHO1sla2DDPVCdcYCNGVctjKfnmSznWBU",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE0ODIzOTAsImV4cCI6MTcxMTQ4NTk5MH0.YBvl3pyTqtKdxolSnYqjizWkj8tG9tCq98MNEw5tQd8",
 									"type": "string"
 								}
 							]
@@ -877,18 +948,18 @@
 							"urlencoded": [
 								{
 									"key": "challenge_id",
-									"value": "2",
+									"value": "1",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/search/accept_challenge",
+							"raw": "http://localhost:8000/search/accept_challenge",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"search",
 								"accept_challenge"
@@ -917,18 +988,18 @@
 							"urlencoded": [
 								{
 									"key": "challenge_id",
-									"value": "2",
+									"value": "1",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/search/reject_challenge",
+							"raw": "http://localhost:8000/search/reject_challenge",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"search",
 								"reject_challenge"
@@ -945,7 +1016,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDIyODcwMjYsImV4cCI6MTcwMjI5MDYyNn0.kL9LsOsA3LvBZq0bwVqnfeAPNxrN_ty262WOwWG3KGM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE0ODIzOTAsImV4cCI6MTcxMTQ4NTk5MH0.YBvl3pyTqtKdxolSnYqjizWkj8tG9tCq98MNEw5tQd8",
 									"type": "string"
 								}
 							]
@@ -953,12 +1024,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/search/challenges_count",
+							"raw": "http://localhost:8000/search/challenges_count",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"search",
 								"challenges_count"
@@ -975,7 +1046,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDIyODcwMjYsImV4cCI6MTcwMjI5MDYyNn0.kL9LsOsA3LvBZq0bwVqnfeAPNxrN_ty262WOwWG3KGM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE0ODIzOTAsImV4cCI6MTcxMTQ4NTk5MH0.YBvl3pyTqtKdxolSnYqjizWkj8tG9tCq98MNEw5tQd8",
 									"type": "string"
 								}
 							]
@@ -983,15 +1054,107 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/search/update_challenges_count",
+							"raw": "http://localhost:8000/search/update_challenges_count",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"search",
 								"update_challenges_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search City Sports",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTM1NjQ4MDksImV4cCI6MTcxMzU2ODQwOX0.IHFXGx9E8QS3R-zzaEcGWn_jgmsH8n-n7znbzI7cb8I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "limit",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "search",
+									"value": "Cricket",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/search/city_sports",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"search",
+								"city_sports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add City Sports",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MSwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTM2MTMwNzMsImV4cCI6MTcxMzYxNjY3M30.W8s1BIw7NXIW4Cis12CQXyk-OQrM48twz9r94UcB7Zw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "sport_id",
+									"value": "20",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://teamapi.playtoconquer.com:8881/search/add_sports",
+							"protocol": "https",
+							"host": [
+								"teamapi",
+								"playtoconquer",
+								"com"
+							],
+							"port": "8881",
+							"path": [
+								"search",
+								"add_sports"
 							]
 						}
 					},
@@ -1010,7 +1173,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDIxNDkxMDIsImV4cCI6MTcwMjE1MjcwMn0.u9I7ewou6Zb_hGqZVvE00RwioQfMTYBLmGgReaYLF8w",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1NjQ5MzYsImV4cCI6MTcxMTU2ODUzNn0.Zo7px4CQzA58OimADjT4bjb54HADGcxlcGyqZhaAzBo",
 									"type": "string"
 								}
 							]
@@ -1033,17 +1196,18 @@
 								{
 									"key": "search",
 									"value": "rohit",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/chat/",
+							"raw": "http://localhost:8000/chat/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"chat",
 								""
@@ -1060,7 +1224,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDMzNTEyODIsImV4cCI6MTcwMzM1NDg4Mn0.Sxk_iJwytdc-aNhkoyv174RgJQ-GZjbHOpzASg1TCp4",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1NjQ5MzYsImV4cCI6MTcxMTU2ODUzNn0.Zo7px4CQzA58OimADjT4bjb54HADGcxlcGyqZhaAzBo",
 									"type": "string"
 								}
 							]
@@ -1072,7 +1236,7 @@
 							"urlencoded": [
 								{
 									"key": "challenge_id",
-									"value": "4",
+									"value": "1",
 									"type": "text"
 								},
 								{
@@ -1088,12 +1252,12 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/chat/chat_messages",
+							"raw": "http://localhost:8000/chat/chat_messages",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"chat",
 								"chat_messages"
@@ -1110,7 +1274,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2ODcyNTQwNjksImV4cCI6MTY4NzI1NzY2OX0.hWkwFVjCndtr7yJFxfTPywXDAQwHtRfH5A7uAJZfxo0",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1NjQ5MzYsImV4cCI6MTcxMTU2ODUzNn0.Zo7px4CQzA58OimADjT4bjb54HADGcxlcGyqZhaAzBo",
 									"type": "string"
 								}
 							]
@@ -1122,7 +1286,7 @@
 							"urlencoded": [
 								{
 									"key": "challenge_id",
-									"value": "2",
+									"value": "1",
 									"type": "text"
 								},
 								{
@@ -1133,12 +1297,12 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/chat/send_messages",
+							"raw": "http://localhost:8000/chat/send_messages",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"chat",
 								"send_messages"
@@ -1155,7 +1319,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDIyODIxMzYsImV4cCI6MTcwMjI4NTczNn0.inOzQwuUjtcuX5Kr9Ii5e01tjFzVF3V64KU9wchEdUw",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1NjQ5MzYsImV4cCI6MTcxMTU2ODUzNn0.Zo7px4CQzA58OimADjT4bjb54HADGcxlcGyqZhaAzBo",
 									"type": "string"
 								}
 							]
@@ -1163,15 +1327,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/chat/update_message_count",
+							"raw": "http://localhost:8000/chat/message_count",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"chat",
-								"update_message_count"
+								"message_count"
 							]
 						}
 					},
@@ -1185,7 +1349,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDIyODIxMzYsImV4cCI6MTcwMjI4NTczNn0.inOzQwuUjtcuX5Kr9Ii5e01tjFzVF3V64KU9wchEdUw",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1NjQ5MzYsImV4cCI6MTcxMTU2ODUzNn0.Zo7px4CQzA58OimADjT4bjb54HADGcxlcGyqZhaAzBo",
 									"type": "string"
 								}
 							]
@@ -1193,15 +1357,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/chat/update_challenges_count",
+							"raw": "http://localhost:8000/chat/update_message_count",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"chat",
-								"update_challenges_count"
+								"update_message_count"
 							]
 						}
 					},
@@ -1220,7 +1384,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDM2MTY5MDMsImV4cCI6MTcwMzYyMDUwM30.X3fhHsQzHKqmW0bsZP7NGiAnGEIhNfr59xMcwUo-tWE",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1Njg2MjksImV4cCI6MTcxMTU3MjIyOX0.gPz2jMfz8C9tWiEUB5CWhDJap12Gk5ci3wTIPjQ01xA",
 									"type": "string"
 								}
 							]
@@ -1249,12 +1413,12 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/result/all_result",
+							"raw": "http://localhost:8000/result/all_result",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"result",
 								"all_result"
@@ -1275,7 +1439,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYXJqdW4xNzcxQGdtYWlsLmNvbSIsInBsYXllcl9pZCI6MzksInBhc3N3b3JkIjoiMzIyNTAxNzBhMGRjYTkyZDUzZWM5NjI0ZjMzNmNhMjQifSwiaWF0IjoxNjg3NzIyODgxLCJleHAiOjE2ODc3MjY0ODF9.MrwPlqhBCo9Ngu7cnvQvTYsJtZwQ_igpzsREEJQjs_A",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1Njg2MjksImV4cCI6MTcxMTU3MjIyOX0.gPz2jMfz8C9tWiEUB5CWhDJap12Gk5ci3wTIPjQ01xA",
 									"type": "string"
 								}
 							]
@@ -1287,18 +1451,18 @@
 							"urlencoded": [
 								{
 									"key": "challenge_id",
-									"value": "4",
+									"value": "1",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/result/",
+							"raw": "http://localhost:8000/result/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"result",
 								""
@@ -1315,7 +1479,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2ODc2OTIzNTIsImV4cCI6MTY4NzY5NTk1Mn0.cg7PwuzE9htaj3iyijXdU3LGuNPILCNP_a0ONSN8aH0",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1Njg2MjksImV4cCI6MTcxMTU3MjIyOX0.gPz2jMfz8C9tWiEUB5CWhDJap12Gk5ci3wTIPjQ01xA",
 									"type": "string"
 								}
 							]
@@ -1327,23 +1491,23 @@
 							"urlencoded": [
 								{
 									"key": "challenge_id",
-									"value": "3",
+									"value": "1",
 									"type": "text"
 								},
 								{
 									"key": "result",
-									"value": "ku095od6dfkk673d3d739uk37d7f99g4gg76087ydtxgmmgiik",
+									"value": "f8CT8QEbPrSD5EmFQPO5qszMwFYKAR5SeFZNpGUayVxjf5LXFd",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/result/add",
+							"raw": "http://localhost:8000/result/add",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"result",
 								"add"
@@ -1365,7 +1529,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "TZo5NgaSySKj54z",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1NzA0NTcsImV4cCI6MTcxMTU3NDA1N30.zMz6bbJaljCTi7PP1DTcYrOv_VWlAjrAZAnwwc92hjE",
 									"type": "string"
 								}
 							]
@@ -1373,12 +1537,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/authorize/",
+							"raw": "http://localhost:8000/authorize/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"authorize",
 								""
@@ -1395,7 +1559,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE2OTcxNDM5MzEsImV4cCI6MTY5NzE0NzUzMX0.LX9er2foUUDmriFhXWIApy5UPeJks1tkDv_0BjXAxRc",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1NzA0NTcsImV4cCI6MTcxMTU3NDA1N30.zMz6bbJaljCTi7PP1DTcYrOv_VWlAjrAZAnwwc92hjE",
 									"type": "string"
 								}
 							]
@@ -1403,12 +1567,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/authorize/destroy",
+							"raw": "http://localhost:8000/authorize/destroy",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"authorize",
 								"destroy"
@@ -1430,7 +1594,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDM5NTI3ODQsImV4cCI6MTcwMzk1NjM4NH0.cCRrYrVE-yK_FN3dRkWfCTS4wkQkbauHaaxVaKD5CVU",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1Njk3MzYsImV4cCI6MTcxMTU3MzMzNn0.hjcfRr-Jv311nPCFhTJZcatTlBY6VUUomAVNaxMkk9o",
 									"type": "string"
 								}
 							]
@@ -1458,12 +1622,12 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/block/",
+							"raw": "http://localhost:8000/block/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"block",
 								""
@@ -1480,7 +1644,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDM5NTI3ODQsImV4cCI6MTcwMzk1NjM4NH0.cCRrYrVE-yK_FN3dRkWfCTS4wkQkbauHaaxVaKD5CVU",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1Njk3MzYsImV4cCI6MTcxMTU3MzMzNn0.hjcfRr-Jv311nPCFhTJZcatTlBY6VUUomAVNaxMkk9o",
 									"type": "string"
 								}
 							]
@@ -1498,12 +1662,12 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/block/add",
+							"raw": "http://localhost:8000/block/add",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"block",
 								"add"
@@ -1520,7 +1684,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwicGxheWVyX2lkIjoxMiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MDM5NTI3ODQsImV4cCI6MTcwMzk1NjM4NH0.cCRrYrVE-yK_FN3dRkWfCTS4wkQkbauHaaxVaKD5CVU",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1Njk3MzYsImV4cCI6MTcxMTU3MzMzNn0.hjcfRr-Jv311nPCFhTJZcatTlBY6VUUomAVNaxMkk9o",
 									"type": "string"
 								}
 							]
@@ -1538,15 +1702,272 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/block/unblock",
+							"raw": "http://localhost:8000/block/unblock",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8000",
 							"path": [
 								"block",
 								"unblock"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notification",
+			"item": [
+				{
+					"name": "Notifications",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1NzA0NTcsImV4cCI6MTcxMTU3NDA1N30.zMz6bbJaljCTi7PP1DTcYrOv_VWlAjrAZAnwwc92hjE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/notification",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"notification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Notifications",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1NzA0NTcsImV4cCI6MTcxMTU3NDA1N30.zMz6bbJaljCTi7PP1DTcYrOv_VWlAjrAZAnwwc92hjE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "token_id",
+									"value": "ku095od6dfkk673d3d739uk37d7f99g4gg76087ydtxgmmgiik",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Rushikesh Mulmule sent you challenge for cricket.",
+									"type": "text"
+								},
+								{
+									"key": "link",
+									"value": "/challenege",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/notification/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"notification",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notifications Count",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic3VwZXJraW5nczE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MiwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTE1NzA0NTcsImV4cCI6MTcxMTU3NDA1N30.zMz6bbJaljCTi7PP1DTcYrOv_VWlAjrAZAnwwc92hjE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8000/notification/notification_count",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"notification",
+								"notification_count"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teams",
+			"item": [
+				{
+					"name": "Teams Join Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibXVsbXVsZXJ1czE3MTdAZ21haWwuY29tIiwidGVhbV9pZCI6MSwicGFzc3dvcmQiOiIzMjI1MDE3MGEwZGNhOTJkNTNlYzk2MjRmMzM2Y2EyNCJ9LCJpYXQiOjE3MTYxNDAzNzgsImV4cCI6MTcxNjE0Mzk3OH0.twnOU-OoqBSSf-ppspY174XpqUEmjR5NIYtiF0gEwy4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "limit",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://teamapi.playtoconquer.com:8881/teams/receive_request",
+							"protocol": "https",
+							"host": [
+								"teamapi",
+								"playtoconquer",
+								"com"
+							],
+							"port": "8881",
+							"path": [
+								"teams",
+								"receive_request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accept Player Teams Join Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibWVoZXJlc2gubXVsbXVsZUB5YWhvby5jb20iLCJ0ZWFtX2lkIjoyLCJwYXNzd29yZCI6IjMyMjUwMTcwYTBkY2E5MmQ1M2VjOTYyNGYzMzZjYTI0In0sImlhdCI6MTcxNjE0NTAwNCwiZXhwIjoxNzE2MTQ4NjA0fQ.Wsw8D6HeWTXlXslcXqeulS05pmTgqCiEnjPeckUcebs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "team_player_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://teamapi.playtoconquer.com:8881/teams/accept_request",
+							"protocol": "https",
+							"host": [
+								"teamapi",
+								"playtoconquer",
+								"com"
+							],
+							"port": "8881",
+							"path": [
+								"teams",
+								"accept_request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject Player Teams Join Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoibWVoZXJlc2gubXVsbXVsZUB5YWhvby5jb20iLCJ0ZWFtX2lkIjoyLCJwYXNzd29yZCI6IjMyMjUwMTcwYTBkY2E5MmQ1M2VjOTYyNGYzMzZjYTI0In0sImlhdCI6MTcxNjE0NTAwNCwiZXhwIjoxNzE2MTQ4NjA0fQ.Wsw8D6HeWTXlXslcXqeulS05pmTgqCiEnjPeckUcebs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "team_player_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://teamapi.playtoconquer.com:8881/teams/reject_request",
+							"protocol": "https",
+							"host": [
+								"teamapi",
+								"playtoconquer",
+								"com"
+							],
+							"port": "8881",
+							"path": [
+								"teams",
+								"reject_request"
 							]
 						}
 					},
