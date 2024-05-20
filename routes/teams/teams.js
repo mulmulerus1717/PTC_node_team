@@ -27,4 +27,10 @@ router.post('/reject_request', validationRulesToken(), validationRulesAccept(), 
 });
 /* End reject request Form */
 
+/* Start reject request Form */
+router.post('/team_players', validationRulesToken(), validateRule, function(req, res, next) {
+    teamsModel.team_players(req, res);
+});
+/* End reject request Form */
+
 module.exports = router;

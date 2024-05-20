@@ -151,13 +151,28 @@ exports.result_add = async function (req, res){
                         var draw = teamsByResultAdd[0].draw;
                         
                         if(team_result != "" && opponent_result != "" && team_result == opponent_result){
+
+                            const [resultsteamPlayers, teamsPlayers] = await sequelize.query("SELECT team_id, opponent_id, sport_id FROM `teams_challenges` WHERE id = ?",{replacements:[challenge_id]});
+                            if(teamsPlayers!=""){
+                                var playerUpdateTeamId = teamsPlayers[0].team_id;
+                                var playerUpdateOpponentId = teamsPlayers[0].opponent_id;
+                                var playerUpdateSportId = teamsPlayers[0].sport_id;
+                                await sequelize.query("UPDATE players SET teams_matches = teams_matches + 1 WHERE player_id IN (SELECT player_id FROM `team_players` WHERE `team_id` IN (?,?) AND sport_id IN (?) GROUP BY player_id)",{replacements:[playerUpdateTeamId,playerUpdateOpponentId,playerUpdateSportId]});
+                            }
+
                             if(won == 0 && draw == 0){
                                 if(team_result == "draw"){
                                     await sequelize.query("UPDATE teams_challenges SET draw = 1, result_date = ?, accept_status = 3 WHERE id = ?",{replacements:[currenttime,challenge_id]});
                                     await sequelize.query("UPDATE teams SET matches = matches + 1, draw = draw + 1 WHERE id = ? and id = ?",{replacements:[challengeteamId,challengeOpponentId]});
+                                    if(teamsPlayers!=""){
+                                        await sequelize.query("UPDATE players SET teams_draw = teams_draw + 1 WHERE player_id IN (SELECT player_id FROM `team_players` WHERE `team_id` IN (?,?) AND sport_id IN (?) GROUP BY player_id)",{replacements:[challengeteamId,challengeOpponentId,playerUpdateSportId]});
+                                    }
                                 }else{
                                     await sequelize.query("UPDATE teams_challenges SET won = ?, result_date = ?, accept_status = 3 WHERE id = ?",{replacements:[team_result,currenttime,challenge_id]});
                                     await sequelize.query("UPDATE teams SET matches = matches + 1, won = won + 1 WHERE id = ?",{replacements:[team_result]});
+                                    if(teamsPlayers!=""){
+                                        await sequelize.query("UPDATE players SET teams_won = teams_won + 1 WHERE player_id IN (SELECT player_id FROM `team_players` WHERE `team_id` IN (?) AND sport_id IN (?) GROUP BY player_id)",{replacements:[team_result,playerUpdateSportId]});
+                                    }
                                 }
 
                                 /* Start add notification */

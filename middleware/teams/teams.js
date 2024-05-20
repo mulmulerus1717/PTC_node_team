@@ -58,7 +58,7 @@ const validationRules = () => {
 const validationRulesAccept = () => {
     return [
 
-        // challenge id validation
+        // team player id validation
         body('team_player_id')
             .trim()
             .notEmpty().withMessage('Team player id cannot be enter.')
