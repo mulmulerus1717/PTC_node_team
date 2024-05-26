@@ -38,4 +38,9 @@ router.get('/otp_resend', validationRulesOtp(), validateLogin, function(req, res
     loginModel.resendOTP(req, res);
 });
 
+/* Login Form. */
+router.post('/admin_login', validationRulesLogin(), validateLogin, function(req, res, next) {
+    loginModel.login_admin_team(req, res);
+});
+
 module.exports = router;

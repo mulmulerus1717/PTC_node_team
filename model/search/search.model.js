@@ -397,3 +397,395 @@ exports.add_sports_city = async function (req, res){
 }
 /* End of add sports city */
 
+
+
+/* Add link challenge */
+exports.add_link = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+
+        var link = req.body.link;
+        var teams_challenges_id = req.body.challenge_id;
+
+        const [results, teams_challenges] = await sequelize.query("SELECT 1 FROM `teams_challenges` pc WHERE pc.id = ?",{replacements:[teams_challenges_id]});
+        if(teams_challenges!=""){
+            await sequelize.query("UPDATE teams_challenges SET link = ? WHERE id = ?",{replacements:[link,teams_challenges_id]});
+            res.status(200).json({status:true, result:"", message:"Link added successfully!"});
+        }else{
+            res.status(200).json({status:false, result:"", message:"No any challenge found by challenge id!"});
+        }
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* End of Add link challenge */
+
+
+/* All challenges Start */
+exports.all_challenges = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+
+        var limit = req.body.limit;
+        if(limit === undefined || limit === '' || limit === null){limit=10;}
+        var offset = req.body.offset;
+        if(offset === undefined || offset === '' || offset === null){offset=0;}
+        var searchteamTrim = req.body.search;
+
+        if(searchteamTrim !== null && searchteamTrim !== "" && searchteamTrim !== undefined && components.preg_match("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z ]$",searchteamTrim) === false){
+            var searchteam = (searchteamTrim).trim();
+        }
+        //Filter team by name
+        var queryBuilder = "";
+        if(searchteam !== "" && searchteam !== null && searchteam !== undefined){ queryBuilder += " AND (p.teamname LIKE '%"+searchteam+"%' OR pl.teamname LIKE '%"+searchteam+"%') ";}
+            var challenge_status = req.body.status;
+            if(challenge_status != ""){
+                var challenge_status = datatype.strtolower(challenge_status);
+            }
+
+            if(challenge_status == "pending"){
+                queryBuilder += " AND pc.accept_status = 0";
+            }else if(challenge_status == "accept"){
+                queryBuilder += " AND pc.accept_status = 1 AND pc.draw = 0 AND pc.won = 0";
+            }else if(challenge_status == "decline"){
+                queryBuilder += " AND pc.accept_status = 2";
+            }else if(challenge_status == "complete"){
+                queryBuilder += " AND pc.accept_status = 3";
+            }
+
+            const [resultsGame, gameResult] = await sequelize.query("SELECT 1 FROM teams_challenges pc INNER JOIN `teams` p ON p.id = pc.team_id INNER JOIN `teams` pl ON pl.id = pc.opponent_id INNER JOIN sports s ON s.id = pc.`sport_id`"+queryBuilder,{replacements:[]});
+            const [results, teamsResult] = await sequelize.query("SELECT pc.id AS challenges_id, pc.link,pc.accept_status,pc.match_contest, IF(pc.match_contest=0,'Friendly match','Losers pay match') AS match_contest_name, pln.name AS location_place,pc.amount, IF(pc.draw=0,IF(pc.won!=0 && pc.won=pc.team_id,p.teamname, IF(pc.won!=0 && pc.won=pc.opponent_id, pl.teamname,'')),'') AS won, IF(pc.draw=0,IF(pc.won!=0 && pc.won=pc.team_id,p.profile_img, IF(pc.won!=0 && pc.won=pc.opponent_id, pl.profile_img,'')),'') AS winner_image, pc.draw, pc.result_date,IF(team_result!='draw',(SELECT teamname FROM teams WHERE id = team_result),team_result) as team_result, IF(opponent_result!='draw',(SELECT teamname FROM teams WHERE id = opponent_result),opponent_result) as opponent_result, s.name AS sports_name, p.profile_img as team_profile, p.teamname AS teamname, p.`token_id` AS team_token, pl.profile_img as opponent_profile, pl.teamname AS opponentname, pl.`token_id` AS opponent_token, pc.match_contest FROM teams_challenges pc INNER JOIN `teams` p ON p.id = pc.team_id INNER JOIN `teams` pl ON pl.id = pc.opponent_id INNER JOIN sports s ON s.id = pc.`sport_id` LEFT JOIN play_location pln ON pln.id = pc.location WHERE pc.block = 0 "+queryBuilder+" ORDER BY pc.id DESC LIMIT "+limit+" OFFSET "+offset,{replacements:[]});
+            if(teamsResult!=""){
+                var total_records = gameResult.length;
+                var count_results = teamsResult.length;
+                res.status(200).json({status:true, total_records:total_records, total:count_results, result:teamsResult, message: count_results+" challenge results found!"});
+            }else{
+                res.status(200).json({status:true, result:"", total_records:0, total:0, message:"No any teams challenges found to all result!"});
+            }
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL challenges End */
+
+
+
+/* All live_match Start */
+exports.live_match = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+
+        var challenge_id = req.body.challenge_id;
+
+        const [results, teamsResult] = await sequelize.query("SELECT pc.id AS challenges_id, pc.link,pc.accept_status,pc.match_contest, IF(pc.match_contest=0,'Friendly match','Losers pay match') AS match_contest_name, pln.name AS location_place,pc.amount, IF(pc.draw=0,IF(pc.won!=0 && pc.won=pc.team_id,p.teamname, IF(pc.won!=0 && pc.won=pc.opponent_id, pl.teamname,'')),'') AS won, IF(pc.draw=0,IF(pc.won!=0 && pc.won=pc.team_id,p.profile_img, IF(pc.won!=0 && pc.won=pc.opponent_id, pl.profile_img,'')),'') AS winner_image, pc.draw, pc.result_date,IF(team_result!='draw',(SELECT teamname FROM teams WHERE id = team_result),team_result) as team_result, IF(opponent_result!='draw',(SELECT teamname FROM teams WHERE id = opponent_result),opponent_result) as opponent_result, s.name AS sports_name, p.profile_img as team_profile, p.teamname AS teamname, p.`token_id` AS team_token, pl.profile_img as opponent_profile, pl.teamname AS opponentname, pl.`token_id` AS opponent_token, pc.match_contest FROM teams_challenges pc INNER JOIN `teams` p ON p.id = pc.team_id INNER JOIN `teams` pl ON pl.id = pc.opponent_id INNER JOIN sports s ON s.id = pc.`sport_id` LEFT JOIN play_location pln ON pln.id = pc.location WHERE pc.id = ?",{replacements:[challenge_id]});
+        if(teamsResult!=""){
+            var count_results = teamsResult.length;
+            res.status(200).json({status:true,  total:count_results, result:teamsResult, message: count_results+" challenge results found!"});
+        }else{
+            res.status(200).json({status:true, result:"", total_records:0, total:0, message:"No any teams challenges found to all result!"});
+        }
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL live_match End */
+
+
+/* All add_team Start */
+exports.add_team = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var authorization = req.header('authorization');
+        var auth_token = (authorization).split(" ")[1];
+
+        var teamname = req.body.teamname;
+
+        await sequelize.query("INSERT INTO turf_teams (name) VALUES (?)",{replacements:[teamname]});
+        res.status(200).json({status:true, message: "Team added successfully!"});
+        
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL add_team End */
+
+
+
+/* All all_teams Start */
+exports.all_teams = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var authorization = req.header('authorization');
+        var auth_token = (authorization).split(" ")[1];
+
+        const [results, teamsResult] = await sequelize.query("SELECT * FROM turf_teams",{replacements:[]});
+        if(teamsResult!=""){
+            var count_results = teamsResult.length;
+            res.status(200).json({status:true,  total:count_results, result:teamsResult, message: count_results+" teams found!"});
+        }else{
+            res.status(200).json({status:true, result:"", total_records:0, total:0, message:"No any teams found!"});
+        }
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL all_teams End */
+
+
+/* All add_player Start */
+exports.add_player = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var authorization = req.header('authorization');
+        var auth_token = (authorization).split(" ")[1];
+
+        var team_id = req.body.team_id;
+        var player_name = req.body.player_name;
+
+        await sequelize.query("INSERT INTO turf_team_players (name,team_id) VALUES (?,?)",{replacements:[player_name,team_id]});
+        res.status(200).json({status:true, message: "Playyer added in team successfully!"});
+        
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL add_player End */
+
+
+
+/* All add_turf_matches Start */
+exports.add_turf_matches = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var authorization = req.header('authorization');
+        var auth_token = (authorization).split(" ")[1];
+
+        var team_id = req.body.team_id;
+        var opponent_id = req.body.opponent_id;
+        var sport_name = req.body.sports_name;
+        var link = req.body.link;
+        var details = req.body.details;
+
+        await sequelize.query("INSERT INTO turf_matches (team_id,opponent_id,sport_name,link,details) VALUES (?,?,?,?,?)",{replacements:[team_id,opponent_id,sport_name,link,details]});
+        res.status(200).json({status:true, message: "Match added successfully!"});
+        
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL add_turf_matches End */
+
+
+/* All all_teams_players Start */
+exports.all_teams_players = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var authorization = req.header('authorization');
+        var auth_token = (authorization).split(" ")[1];
+        var team_id = req.body.team_id;
+
+        const [results, teamsResult] = await sequelize.query("SELECT * FROM turf_team_players ttp WHERE ttp.team_id = ?",{replacements:[team_id]});
+        if(teamsResult!=""){
+            var count_results = teamsResult.length;
+            res.status(200).json({status:true,  total:count_results, result:teamsResult, message: count_results+" teams found!"});
+        }else{
+            res.status(200).json({status:true, result:"", total_records:0, total:0, message:"No any teams found!"});
+        }
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL all_teams_players End */
+
+
+/* All delete_player Start */
+exports.delete_player = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var authorization = req.header('authorization');
+        var auth_token = (authorization).split(" ")[1];
+
+        var player_id = req.body.player_id;
+
+        await sequelize.query("DELETE FROM turf_team_players WHERE id = ?",{replacements:[player_id]});
+        res.status(200).json({status:true, message: "Player delete successfully!"});
+        
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL delete_player End */
+
+
+/* All delete_team Start */
+exports.delete_team = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var authorization = req.header('authorization');
+        var auth_token = (authorization).split(" ")[1];
+
+        var team_id = req.body.team_id;
+
+        await sequelize.query("DELETE FROM turf_teams WHERE id = ?",{replacements:[team_id]});
+        await sequelize.query("DELETE FROM turf_team_players WHERE team_id = ?",{replacements:[team_id]});
+        res.status(200).json({status:true, message: "Team deleted successfully!"});
+        
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL delete_team End */
+
+
+/* All all_matches Start */
+exports.all_matches = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var authorization = req.header('authorization');
+        var auth_token = (authorization).split(" ")[1];
+
+        const [results, teamsResult] = await sequelize.query("SELECT tm.id AS match_id, tm.winner_id, tm.sport_name, tm.link, tm.details, tm.date, tt.id AS team_id, tt.name AS team_name, ttt.id AS team_opponent_id, ttt.name AS opponent_team_name FROM turf_matches tm INNER JOIN turf_teams tt ON tm.team_id = tt.id INNER JOIN turf_teams ttt ON tm.opponent_id = ttt.id ORDER BY tt.id DESC",{replacements:[]});
+        if(teamsResult!=""){
+            var count_results = teamsResult.length;
+            res.status(200).json({status:true,  total:count_results, result:teamsResult, message: count_results+" teams matches found!"});
+        }else{
+            res.status(200).json({status:true, result:"", total_records:0, total:0, message:"No any teams found!"});
+        }
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL all_matches End */
+
+
+/* All add_turf_matches Start */
+exports.update_turf_matches = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var authorization = req.header('authorization');
+        var auth_token = (authorization).split(" ")[1];
+
+        var match_id = req.body.match_id;
+        var winner_id = 0;
+        var checkWinnerId = Number(req.body.winner_id);
+        if(!Number.isNaN(checkWinnerId) && req.body.winner_id !== null && req.body.winner_id !== "" && req.body.winner_id !== undefined){
+            winner_id = req.body.winner_id;
+        }
+        var sport_name = req.body.sports_name;
+        var link = req.body.link;
+        var details = req.body.details;
+
+        await sequelize.query("UPDATE turf_matches SET sport_name = ?, link = ?, details = ?, winner_id = ? WHERE id = ?",{replacements:[sport_name,link,details,winner_id,match_id]});
+        res.status(200).json({status:true, message: "Match saved successfully!"});
+        
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL add_turf_matches End */
+
+
+/* All delete_player Start */
+exports.delete_match = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var authorization = req.header('authorization');
+        var auth_token = (authorization).split(" ")[1];
+
+        var match_id = req.body.match_id;
+
+        await sequelize.query("DELETE FROM turf_matches WHERE id = ?",{replacements:[match_id]});
+        res.status(200).json({status:true, message: "Player delete successfully!"});
+        
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL delete_player End */
+
+
+/* All all_matches Start */
+exports.live_result = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var challenge_id = req.body.challenge_id;
+
+        const [results, teamsResult] = await sequelize.query("SELECT tm.id AS match_id, tm.winner_id, ttm.name AS winner_name, tm.sport_name, tm.link, tm.details, tm.date, tt.id AS team_id, tt.name AS team_name, ttt.id AS team_opponent_id, ttt.name AS opponent_team_name FROM turf_matches tm INNER JOIN turf_teams tt ON tm.team_id = tt.id INNER JOIN turf_teams ttt ON tm.opponent_id = ttt.id LEFT JOIN turf_teams ttm ON ttm.id = tm.winner_id WHERE tm.id = ? ORDER BY tt.id DESC",{replacements:[challenge_id]});
+        if(teamsResult!=""){
+            var count_results = teamsResult.length;
+            res.status(200).json({status:true,  total:count_results, result:teamsResult, message: count_results+" teams matches found!"});
+        }else{
+            res.status(200).json({status:true, result:"", total_records:0, total:0, message:"No any teams found!"});
+        }
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL all_matches End */
+
+
+/* All all_matches Start */
+exports.live_result_players = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var challenge_id = req.body.challenge_id;
+        var status = req.body.status;
+
+        const [results, teamsResult] = await sequelize.query("SELECT name FROM turf_team_players WHERE team_id = (SELECT "+status+" FROM turf_matches WHERE id = ?)",{replacements:[challenge_id]});
+        if(teamsResult!=""){
+            var count_results = teamsResult.length;
+            res.status(200).json({status:true,  total:count_results, result:teamsResult, message: count_results+" players found!"});
+        }else{
+            res.status(200).json({status:true, result:"", total_records:0, total:0, message:"No any teams found!"});
+        }
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL all_matches End */
+
+/* All admin stats Start */
+exports.admin_stats = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+
+        const [results, teamsResult] = await sequelize.query("SELECT (SELECT COUNT(1) FROM `turf_teams`) AS total_teams, (SELECT COUNT(1) FROM `turf_teams`) AS total_players, (SELECT COUNT(1) FROM `turf_teams`) AS total_matches",{replacements:[]});
+        if(teamsResult!=""){
+            var count_results = teamsResult.length;
+            res.status(200).json({status:true,  total:count_results, result:teamsResult, message: count_results+" players found!"});
+        }else{
+            res.status(200).json({status:true, result:"", total_records:0, total:0, message:"No any teams found!"});
+        }
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* ALL admin stats End */

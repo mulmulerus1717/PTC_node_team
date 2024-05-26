@@ -60,4 +60,68 @@ router.post('/add_sports', validationRulesToken(), validationRulesAddSport(), va
     searchModel.add_sports_city(req, res);
 });
 
+router.post('/add_link', validationRulesAccept(), validateRule, function(req, res, next) {
+    searchModel.add_link(req, res);
+});
+
+router.post('/all_challenges', validationRulesSearch(), function(req, res, next) {
+    searchModel.all_challenges(req, res);
+});
+
+router.post('/live_match', validationRulesAccept(), function(req, res, next) {
+    searchModel.live_match(req, res);
+});
+
+router.post('/add_team', validationRulesToken(), validateRule, function(req, res, next) {
+    searchModel.add_team(req, res);
+});
+
+router.post('/all_teams', validationRulesToken(), function(req, res, next) {
+    searchModel.all_teams(req, res);
+});
+
+router.post('/add_player', validationRulesToken(), validateRule, function(req, res, next) {
+    searchModel.add_player(req, res);
+});
+
+router.post('/add_turf_matches', validationRulesToken(), validateRule, function(req, res, next) {
+    searchModel.add_turf_matches(req, res);
+});
+
+router.post('/all_teams_players', validationRulesToken(), validateRule, function(req, res, next) {
+    searchModel.all_teams_players(req, res);
+});
+
+router.post('/delete_player', validationRulesToken(), validateRule, function(req, res, next) {
+    searchModel.delete_player(req, res);
+});
+
+router.post('/all_matches', validationRulesToken(), validateRule, function(req, res, next) {
+    searchModel.all_matches(req, res);
+});
+
+router.post('/update_turf_matches', validationRulesToken(), validateRule, function(req, res, next) {
+    searchModel.update_turf_matches(req, res);
+});
+
+router.post('/delete_match', validationRulesToken(), validateRule, function(req, res, next) {
+    searchModel.delete_match(req, res);
+});
+
+router.post('/live_result', validationRulesAccept(), function(req, res, next) {
+    searchModel.live_result(req, res);
+});
+
+router.post('/live_result_players', validationRulesAccept(), function(req, res, next) {
+    searchModel.live_result_players(req, res);
+});
+
+router.post('/delete_team', validationRulesAccept(), function(req, res, next) {
+    searchModel.delete_team(req, res);
+});
+
+router.post('/admin_stats', validationRulesAccept(), function(req, res, next) {
+    searchModel.admin_stats(req, res);
+});
+
 module.exports = router;

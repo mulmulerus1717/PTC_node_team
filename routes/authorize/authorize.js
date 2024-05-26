@@ -20,4 +20,16 @@ router.get('/destroy', validationRulesTokenDestroy(), validateRule, function(req
     tokenDestroyModel.authorize_destroy(req, res);
 });
 
+/* authorize Form. */
+router.get('/admin', validationRulesToken(), validateRule, function(req, res, next) {
+    //valid token
+    tokenDestroyModel.authorize_admin(req, res);
+});
+
+/* authorize Destroy. */
+router.get('/destroy_admin', validationRulesTokenDestroy(), validateRule, function(req, res, next) {
+    tokenDestroyModel.authorize_admin_destroy(req, res);
+});
+
+
 module.exports = router;

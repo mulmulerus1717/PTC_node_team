@@ -139,3 +139,47 @@ exports.resendOTP = async function (req, res){
     }
 }
 /* Resend Signup OTP End */
+
+
+
+/* Login Start */
+exports.login_admin_team = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var email = datatype.strtolower(req.body.email);
+        var password = md5(req.body.password);
+        
+        const [results, data] = await sequelize.query("SELECT id,password FROM turfadmin WHERE email = ? AND status = 1 LIMIT 1",{ replacements: [email]});
+        if(data != ""){//check email exist
+            if(data[0].password === password){//match password
+                var turf_id = data[0].id;
+                var user = {
+                    email,
+                    turf_id,
+                    password
+                }
+                var token = jwt.sign({user},'KT9@6!11O',{expiresIn:'3600s'},(err,token)=>{//3600s valid for 1 hour
+                    if(err){
+                        res.status(200).json({status:false, message:"Token cannot create, please try again!"});
+                    }else{
+                        var currenttime = components.moment("Y-M-D H:m:s");
+                        //update last login
+                        sequelize.query("UPDATE turfadmin SET last_login = ?, jwt_token = ? WHERE email = ?",{ replacements: [currenttime,token,email]});
+                        //last login updated
+                        res.status(200).json({ status:true, token:token, message:"Login success, Token will expired after 1 hour!" });
+                    }
+                });
+            }else{
+                res.status(200).json({status:false, message:"Password is incorrect!"});
+            }
+        }else{
+            res.status(200).json({status:false, message:"Email does not exist!"});
+        }
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+
+}
+/* Login end */

@@ -44,3 +44,47 @@ exports.authorize = async function (req, res){
     }
 }
 /* authorize destroy End */
+
+
+/* authorize destroy Start */
+exports.authorize_admin_destroy = async function (req, res){ 
+    try{
+        res.setHeader('Content-Type','application/json');
+        var authorization = req.header('authorization');
+        var auth_token = (authorization).split(" ")[1];
+
+            const [results, data] = await sequelize.query("SELECT id FROM turfadmin WHERE jwt_token = ? LIMIT 1",{replacements:[auth_token]});
+            if(data == ""){//check already exist
+                res.status(200).json({status:false, message:"Admin not found, please login again!"});
+            }else{
+                await sequelize.query("UPDATE turfadmin SET jwt_token = '' WHERE jwt_token = ? ",{replacements:[auth_token]});
+                res.status(200).json({status:true, result:"",message:"Admin logout successfully!"});
+            }
+
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* authorize destroy End */
+
+
+/* authorize destroy Start */
+exports.authorize_admin = async function (req, res){
+    try{
+        res.setHeader('Content-Type','application/json');
+        var authorization = req.header('authorization');
+        var auth_token = (authorization).split(" ")[1];
+
+            const [results, data] = await sequelize.query("SELECT id FROM turfadmin WHERE jwt_token = ? LIMIT 1",{replacements:[auth_token]});
+            if(data == ""){//check already exist
+                res.status(200).json({status:false, message:"Admin not found, please login again!"});
+            }else{
+                res.status(200).json({status:true, result:"",message:"Admin is logged in!"});
+            }
+    } catch(e) {
+        console.log(e); //console log the error so we can see it in the console
+        res.status(500).json({status:false, message:e.toString()});
+    }
+}
+/* authorize destroy End */
